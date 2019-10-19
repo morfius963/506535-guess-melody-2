@@ -8,11 +8,13 @@ Enzyme.configure({adapter: new Adapter()});
 describe(`end to end test`, () => {
   it(`Click event correctly works on start button`, () => {
     const clickHandler = jest.fn();
-    const app = shallow(<WelcomeScreen
-      time = {0}
-      errorCount = {0}
-      onButtonClick = {clickHandler}
-    />);
+    const app = shallow(
+        <WelcomeScreen
+          time = {0}
+          errorCount = {0}
+          onButtonClick = {clickHandler}
+        />
+    );
     const startButton = app.find(`.welcome__button`);
 
     startButton.simulate(`click`);
