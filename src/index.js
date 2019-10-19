@@ -8,6 +8,7 @@ const init = () => {
       <WelcomeScreen
         time = {fixtureData.gameTime}
         errorCount = {fixtureData.errorCount}
+        onButtonClick = {fixtureData.onButtonClick}
       />,
       document.querySelector(`#root`)
   );
