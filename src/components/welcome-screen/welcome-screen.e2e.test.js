@@ -10,7 +10,7 @@ describe(`end to end test`, () => {
     const clickHandler = jest.fn();
     const app = shallow(
         <WelcomeScreen
-          time = {0}
+          gameTime = {0}
           errorCount = {0}
           onButtonClick = {clickHandler}
         />

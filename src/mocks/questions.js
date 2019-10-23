@@ -1,6 +1,6 @@
 export const settings = {
-  gameTime: 8,
-  errorCount: 4,
+  gameTime: 5,
+  errorCount: 2,
   onButtonClick: () => {}
 };
 

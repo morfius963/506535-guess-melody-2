@@ -1,10 +1,10 @@
-import React from "react";
+import React, {PureComponent} from "react";
 import PropTypes from "prop-types";
 import WelcomeScreen from "../welcome-screen/welcome-scren.jsx";
 import ArtistQuestionScreen from "../artist-question-screen/artist-question-screen.jsx";
-import GenreQuestionScreen from "../genre-question-screen/genre-question-screen.jsx.js";
+import GenreQuestionScreen from "../genre-question-screen/genre-question-screen.jsx";
 
-class App extends React.PureComponent {
+class App extends PureComponent {
   static getScreen(question, props, onUserAnswer) {
     if (question === -1) {
       const {time, errorCount} = props;
