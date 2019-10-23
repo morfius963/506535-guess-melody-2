@@ -5,7 +5,7 @@ import {questions} from "../../mocks/questions.js";
 
 describe(`snapshot test`, () => {
   it(`Component correctly renders`, () => {
-    const CURRENT_INDEX = 0;
+    const CURRENT_INDEX = questions.find(({type}) => type === `genre`);
     const clickHandler = jest.fn();
     const tree = renderer
       .create(

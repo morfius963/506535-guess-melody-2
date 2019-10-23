@@ -108,7 +108,7 @@ exports[`snapshot test Component correctly renders 1`] = `
             className="game__input visually-hidden"
             id="answer-0"
             name="answer"
-            onClick={[Function]}
+            onChange={[Function]}
             type="checkbox"
             value="rock"
           />
@@ -139,7 +139,7 @@ exports[`snapshot test Component correctly renders 1`] = `
             className="game__input visually-hidden"
             id="answer-1"
             name="answer"
-            onClick={[Function]}
+            onChange={[Function]}
             type="checkbox"
             value="pop"
           />
@@ -170,7 +170,7 @@ exports[`snapshot test Component correctly renders 1`] = `
             className="game__input visually-hidden"
             id="answer-2"
             name="answer"
-            onClick={[Function]}
+            onChange={[Function]}
             type="checkbox"
             value="jazz"
           />
@@ -201,7 +201,7 @@ exports[`snapshot test Component correctly renders 1`] = `
             className="game__input visually-hidden"
             id="answer-3"
             name="answer"
-            onClick={[Function]}
+            onChange={[Function]}
             type="checkbox"
             value="rock"
           />
