@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import WelcomeScreen from "../welcome-screen/welcome-scren.jsx";
 import ArtistQuestionScreen from "../artist-question-screen/artist-question-screen.jsx";
-import GerneQuestionScreen from "../gerne-question-screen/gerne-question-screen.jsx";
+import GenreQuestionScreen from "../genre-question-screen/genre-question-screen.jsx.js";
 
 class App extends React.PureComponent {
   static getScreen(question, props, onUserAnswer) {
@@ -21,7 +21,7 @@ class App extends React.PureComponent {
 
     switch (currentQuestion.type) {
       case `genre`:
-        return <GerneQuestionScreen
+        return <GenreQuestionScreen
           questions = {currentQuestion}
           screenIndex = {question}
           onAnswer = {onUserAnswer}

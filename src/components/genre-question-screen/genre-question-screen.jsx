@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-const GerneQuestionScreen = ({questions, screenIndex, onAnswer}) => {
+const GenreQuestionScreen = ({questions, screenIndex, onAnswer}) => {
   const {answers, genre} = questions;
 
   return <section className="game game--genre">
@@ -32,7 +32,7 @@ const GerneQuestionScreen = ({questions, screenIndex, onAnswer}) => {
       <h2 className="game__title">Выберите {genre} треки</h2>
       <form className="game__tracks" onSubmit={(evt) => {
         evt.preventDefault();
-        onAnswer();
+        onAnswer([]);
       }}>
         {answers.map((answer, i) => <div key={`${screenIndex}-answer-${i}`} className="track">
           <button className="track__button track__button--play" type="button"></button>
@@ -50,7 +50,7 @@ const GerneQuestionScreen = ({questions, screenIndex, onAnswer}) => {
   </section>;
 };
 
-GerneQuestionScreen.propTypes = {
+GenreQuestionScreen.propTypes = {
   questions: PropTypes.shape({
     type: PropTypes.string.isRequired,
     genre: PropTypes.oneOf([`folk`, `rock`, `pop`, `jazz`]).isRequired,
@@ -65,4 +65,4 @@ GerneQuestionScreen.propTypes = {
   onAnswer: PropTypes.func.isRequired,
 };
 
-export default GerneQuestionScreen;
+export default GenreQuestionScreen;
