@@ -5,13 +5,13 @@ import {questions} from "../../mocks/questions.js";
 
 describe(`snapshot test`, () => {
   it(`Component correctly renders`, () => {
-    const CURRENT_INDEX = questions.find(({type}) => type === `genre`);
+    const currentQuestion = questions.find((question) => question.type === `genre`);
     const clickHandler = jest.fn();
     const tree = renderer
       .create(
           <GenreQuestionScreen
-            questions = {questions[CURRENT_INDEX]}
-            screenIndex = {CURRENT_INDEX}
+            questions = {currentQuestion}
+            screenIndex = {0}
             onAnswer = {clickHandler}
           />
       )
