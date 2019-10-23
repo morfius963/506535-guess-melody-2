@@ -1,9 +1,19 @@
 import React, {useState} from "react";
 import PropTypes from "prop-types";
 
+const makeAnswers = (obj) => obj.reduce((acc, it, i) => {
+  return Object.assign(
+      {},
+      acc,
+      {
+        [`value` + (i + 1)]: false
+      }
+  );
+}, {});
+
 const GenreQuestionScreen = ({questions, screenIndex, onAnswer}) => {
-  const [userAnswers, setUserAnswers] = useState([]);
   const {answers, genre} = questions;
+  const [userAnswers, setUserAnswers] = useState(makeAnswers(answers));
 
   return <section className="game game--genre">
     <header className="game__header">
@@ -34,7 +44,7 @@ const GenreQuestionScreen = ({questions, screenIndex, onAnswer}) => {
       <form className="game__tracks" onSubmit={(evt) => {
         evt.preventDefault();
         onAnswer(userAnswers);
-        setUserAnswers([]);
+        setUserAnswers(makeAnswers(answers));
       }}>
         {answers.map((answer, i) => <div key={`${screenIndex}-answer-${i}`} className="track">
           <button className="track__button track__button--play" type="button"></button>
@@ -47,9 +57,17 @@ const GenreQuestionScreen = ({questions, screenIndex, onAnswer}) => {
               type="checkbox" name="answer"
               value={answer.genre}
               id={`answer-${i}`}
-              onClick={(evt) => {
+              onChange={(evt) => {
                 const isChecked = evt.target.checked;
-                setUserAnswers(isChecked ? [...userAnswers, evt.target.value] : [...userAnswers]);
+                setUserAnswers(
+                    Object.assign(
+                        {},
+                        userAnswers,
+                        {
+                          [`value` + (i + 1)]: isChecked
+                        }
+                    )
+                );
               }} />
             <label className="game__check" htmlFor={`answer-${i}`}>Отметить</label>
           </div>
