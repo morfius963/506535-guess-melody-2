@@ -1,7 +1,8 @@
-import React from "react";
+import React, {useState} from "react";
 import PropTypes from "prop-types";
 
 const GenreQuestionScreen = ({questions, screenIndex, onAnswer}) => {
+  const [userAnswers, setUserAnswers] = useState([]);
   const {answers, genre} = questions;
 
   return <section className="game game--genre">
@@ -32,7 +33,8 @@ const GenreQuestionScreen = ({questions, screenIndex, onAnswer}) => {
       <h2 className="game__title">Выберите {genre} треки</h2>
       <form className="game__tracks" onSubmit={(evt) => {
         evt.preventDefault();
-        onAnswer([]);
+        onAnswer(userAnswers);
+        setUserAnswers([]);
       }}>
         {answers.map((answer, i) => <div key={`${screenIndex}-answer-${i}`} className="track">
           <button className="track__button track__button--play" type="button"></button>
@@ -40,7 +42,15 @@ const GenreQuestionScreen = ({questions, screenIndex, onAnswer}) => {
             <audio></audio>
           </div>
           <div className="game__answer">
-            <input className="game__input visually-hidden" type="checkbox" name="answer" value={answer.genre} id={`answer-${i}`} />
+            <input
+              className="game__input visually-hidden"
+              type="checkbox" name="answer"
+              value={answer.genre}
+              id={`answer-${i}`}
+              onClick={(evt) => {
+                const isChecked = evt.target.checked;
+                setUserAnswers(isChecked ? [...userAnswers, evt.target.value] : [...userAnswers]);
+              }} />
             <label className="game__check" htmlFor={`answer-${i}`}>Отметить</label>
           </div>
         </div>)}
