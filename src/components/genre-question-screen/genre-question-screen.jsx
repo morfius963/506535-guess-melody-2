@@ -1,12 +1,12 @@
 import React, {PureComponent} from "react";
-import PropTypes from "prop-types";
+import thisPropTypes from "./prop-types.js";
 
-const makeAnswers = (obj) => obj.reduce((acc, it, i) => {
+const makeAnswers = (obj) => obj.reduce((acc, {genre}) => {
   return Object.assign(
       {},
       acc,
       {
-        [`value` + (i + 1)]: false
+        [genre]: 0
       }
   );
 }, {});
@@ -16,6 +16,7 @@ class GenreQuestionScreen extends PureComponent {
     super(props);
 
     this.state = makeAnswers(props.questions.answers);
+    this._bindedSetUserAnswer = this._setUserAnswer.bind(this);
   }
 
   render() {
@@ -64,14 +65,8 @@ class GenreQuestionScreen extends PureComponent {
                 type="checkbox" name="answer"
                 value={answer.genre}
                 id={`answer-${i}`}
-                onChange={(evt) => {
-                  const isChecked = evt.target.checked;
-                  this.setState(
-                      {
-                        [`value` + (i + 1)]: isChecked
-                      }
-                  );
-                }} />
+                onChange={this._bindedSetUserAnswer}
+              />
               <label className="game__check" htmlFor={`answer-${i}`}>Отметить</label>
             </div>
           </div>)}
@@ -80,21 +75,21 @@ class GenreQuestionScreen extends PureComponent {
       </section>
     </section>;
   }
+
+  _setUserAnswer(evt) {
+    const isChecked = evt.target.checked;
+    const value = evt.target.value;
+
+    this.setState((prevState) => {
+      if (isChecked) {
+        prevState[value] = prevState[value] + 1;
+      } else {
+        prevState[value] = prevState[value] - 1;
+      }
+    });
+  }
 }
 
-GenreQuestionScreen.propTypes = {
-  questions: PropTypes.shape({
-    type: PropTypes.string.isRequired,
-    genre: PropTypes.oneOf([`folk`, `rock`, `pop`, `jazz`]).isRequired,
-    answers: PropTypes.arrayOf(
-        PropTypes.shape({
-          src: PropTypes.string.isRequired,
-          genre: PropTypes.oneOf([`folk`, `rock`, `pop`, `jazz`]).isRequired,
-        })
-    ).isRequired
-  }),
-  screenIndex: PropTypes.number.isRequired,
-  onAnswer: PropTypes.func.isRequired,
-};
+GenreQuestionScreen.propTypes = thisPropTypes;
 
 export default GenreQuestionScreen;
