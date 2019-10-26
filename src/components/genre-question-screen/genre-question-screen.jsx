@@ -7,7 +7,7 @@ class GenreQuestionScreen extends PureComponent {
     super(props);
 
     this.state = makeAnswers(props.questions.answers);
-    this._bindedSetUserAnswer = this._setUserAnswer.bind(this);
+    this._bindedCheckboxChangeHandler = this._checkboxChangeHandler.bind(this);
   }
 
   render() {
@@ -56,7 +56,7 @@ class GenreQuestionScreen extends PureComponent {
                 type="checkbox" name="answer"
                 value={answer.genre}
                 id={`answer-${i}`}
-                onChange={this._bindedSetUserAnswer}
+                onChange={this._bindedCheckboxChangeHandler}
               />
               <label className="game__check" htmlFor={`answer-${i}`}>Отметить</label>
             </div>
@@ -67,7 +67,7 @@ class GenreQuestionScreen extends PureComponent {
     </section>;
   }
 
-  _setUserAnswer(evt) {
+  _checkboxChangeHandler(evt) {
     const isChecked = evt.target.checked;
     const value = evt.target.value;
 
