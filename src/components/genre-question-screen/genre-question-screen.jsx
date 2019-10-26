@@ -1,15 +1,6 @@
 import React, {PureComponent} from "react";
 import thisPropTypes from "./prop-types.js";
-
-const makeAnswers = (obj) => obj.reduce((acc, {genre}) => {
-  return Object.assign(
-      {},
-      acc,
-      {
-        [genre]: 0
-      }
-  );
-}, {});
+import {makeAnswers} from "../../utils.js";
 
 class GenreQuestionScreen extends PureComponent {
   constructor(props) {
