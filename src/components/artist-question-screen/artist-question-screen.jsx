@@ -1,5 +1,5 @@
 import React from "react";
-import PropTypes from "prop-types";
+import thisPropTypes from "./prop-types.js";
 
 const ArtistQuestionScreen = ({questions, screenIndex, onAnswer}) => {
   const {answers} = questions;
@@ -57,22 +57,6 @@ const ArtistQuestionScreen = ({questions, screenIndex, onAnswer}) => {
   </section>;
 };
 
-ArtistQuestionScreen.propTypes = {
-  questions: PropTypes.shape({
-    type: PropTypes.string.isRequired,
-    song: PropTypes.shape({
-      artist: PropTypes.string.isRequired,
-      src: PropTypes.string.isRequired,
-    }).isRequired,
-    answers: PropTypes.arrayOf(
-        PropTypes.shape({
-          picture: PropTypes.string.isRequired,
-          artist: PropTypes.string.isRequired,
-        })
-    ).isRequired
-  }),
-  screenIndex: PropTypes.number.isRequired,
-  onAnswer: PropTypes.func.isRequired,
-};
+ArtistQuestionScreen.propTypes = thisPropTypes;
 
 export default ArtistQuestionScreen;

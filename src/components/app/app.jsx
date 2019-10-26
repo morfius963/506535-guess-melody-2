@@ -1,8 +1,8 @@
 import React, {PureComponent} from "react";
-import PropTypes from "prop-types";
 import WelcomeScreen from "../welcome-screen/welcome-scren.jsx";
 import ArtistQuestionScreen from "../artist-question-screen/artist-question-screen.jsx";
 import GenreQuestionScreen from "../genre-question-screen/genre-question-screen.jsx";
+import thisPropTypes from "./prop-types.js";
 
 class App extends PureComponent {
   static getScreen(question, props, onUserAnswer) {
@@ -76,10 +76,6 @@ class App extends PureComponent {
   }
 }
 
-App.propTypes = {
-  time: PropTypes.number.isRequired,
-  errorCount: PropTypes.number.isRequired,
-  questions: PropTypes.array.isRequired
-};
+App.propTypes = thisPropTypes;
 
 export default App;

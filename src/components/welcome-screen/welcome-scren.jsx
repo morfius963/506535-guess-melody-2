@@ -1,5 +1,5 @@
 import React from "react";
-import PropTypes from "prop-types";
+import thisPropTypes from "./prop-types.js";
 
 const WelcomeScreen = ({gameTime, errorCount, onButtonClick}) => {
   return <section className="welcome">
@@ -15,10 +15,6 @@ const WelcomeScreen = ({gameTime, errorCount, onButtonClick}) => {
   </section>;
 };
 
-WelcomeScreen.propTypes = {
-  gameTime: PropTypes.number.isRequired,
-  errorCount: PropTypes.number.isRequired,
-  onButtonClick: PropTypes.func.isRequired
-};
+WelcomeScreen.propTypes = thisPropTypes;
 
 export default WelcomeScreen;
