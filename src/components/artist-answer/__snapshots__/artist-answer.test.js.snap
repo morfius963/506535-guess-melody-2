@@ -1,0 +1,26 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`snapshot test Component correctly renders 1`] = `
+<div
+  className="artist"
+>
+  <input
+    className="artist__input visually-hidden"
+    id="answer-0"
+    name="answer"
+    type="radio"
+    value="John Snow"
+  />
+  <label
+    className="artist__name"
+    htmlFor="answer-0"
+  >
+    <img
+      alt="John Snow"
+      className="artist__picture"
+      src="http://placehold.it/134x134"
+    />
+    John Snow
+  </label>
+</div>
+`;
