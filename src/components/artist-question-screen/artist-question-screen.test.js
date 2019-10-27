@@ -1,14 +1,15 @@
 import React from "react";
 import renderer from "react-test-renderer";
 import ArtistQuestionScreen from "./artist-question-screen.jsx";
+import GameHeader from "../game-header/game-header";
+import ArtistAnswer from "../artist-answer/artist-answer";
 import {questions} from "../../mocks/questions.js";
+
+jest.mock(`../game-header/game-header`, () => jest.fn().mockReturnValue(null));
+jest.mock(`../artist-answer/artist-answer`, () => jest.fn().mockReturnValue(null));
 
 describe(`snapshot test`, () => {
   it(`Component correctly renders`, () => {
-    const mockNullComponent = jest.fn().mockReturnValue(null);
-    jest.mock(`../game-header/game-header.jsx`, () => mockNullComponent);
-    jest.mock(`../artist-answer/artist-answer.jsx`, () => mockNullComponent);
-
     const currentQuestion = questions.find((question) => question.type === `artist`);
     const clickHandler = jest.fn();
     const tree = renderer
@@ -20,6 +21,8 @@ describe(`snapshot test`, () => {
           />
       )
       .toJSON();
+    expect(GameHeader).toHaveBeenCalled();
+    expect(ArtistAnswer).toHaveBeenCalled();
     expect(tree).toMatchSnapshot();
   });
 });
