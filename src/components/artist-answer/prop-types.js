@@ -4,6 +4,5 @@ export default {
   answer: PropTypes.shape({
     picture: PropTypes.string.isRequired,
     artist: PropTypes.string.isRequired
-  }),
-  id: PropTypes.number.isRequired
+  })
 };

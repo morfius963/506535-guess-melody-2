@@ -2,7 +2,7 @@ import React, {PureComponent} from "react";
 import WelcomeScreen from "../welcome-screen/welcome-scren.jsx";
 import ArtistQuestionScreen from "../artist-question-screen/artist-question-screen.jsx";
 import GenreQuestionScreen from "../genre-question-screen/genre-question-screen.jsx";
-import thisPropTypes from "./prop-types.js";
+import propTypes from "./prop-types.js";
 
 class App extends PureComponent {
   static getScreen(question, props, onUserAnswer) {
@@ -76,6 +76,6 @@ class App extends PureComponent {
   }
 }
 
-App.propTypes = thisPropTypes;
+App.propTypes = propTypes;
 
 export default App;

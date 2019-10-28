@@ -1,5 +1,6 @@
 import React from "react";
-import thisPropTypes from "./prop-types.js";
+import PropTypes from "prop-types";
+import propTypes from "./prop-types.js";
 import GameHeader from "../game-header/game-header.jsx";
 import ArtistAnswer from "../artist-answer/artist-answer.jsx";
 
@@ -31,6 +32,10 @@ const ArtistQuestionScreen = ({questions, screenIndex, onAnswer}) => {
   </section>;
 };
 
-ArtistQuestionScreen.propTypes = thisPropTypes;
+ArtistQuestionScreen.propTypes = {
+  questions: propTypes.questions,
+  screenIndex: PropTypes.number.isRequired,
+  onAnswer: PropTypes.func.isRequired,
+};
 
 export default ArtistQuestionScreen;

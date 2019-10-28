@@ -1,5 +1,6 @@
 import React, {PureComponent} from "react";
-import thisPropTypes from "./prop-types.js";
+import PropTypes from "prop-types";
+import propTypes from "./prop-types.js";
 import {makeAnswers} from "../../utils.js";
 import GameHeader from "../game-header/game-header.jsx";
 import GenreAnswer from "../genre-answer/genre-answer.jsx";
@@ -54,6 +55,10 @@ class GenreQuestionScreen extends PureComponent {
   }
 }
 
-GenreQuestionScreen.propTypes = thisPropTypes;
+GenreQuestionScreen.propTypes = {
+  questions: propTypes.questions,
+  screenIndex: PropTypes.number.isRequired,
+  onAnswer: PropTypes.func.isRequired,
+};
 
 export default GenreQuestionScreen;

@@ -1,5 +1,6 @@
 import React from "react";
-import thisPropTypes from "./prop-types.js";
+import PropTypes from "prop-types";
+import propTypes from "./prop-types.js";
 
 const ArtistAnswer = ({answer, id}) => {
   return <div className="artist">
@@ -11,6 +12,9 @@ const ArtistAnswer = ({answer, id}) => {
   </div>;
 };
 
-ArtistAnswer.propTypes = thisPropTypes;
+ArtistAnswer.propTypes = {
+  answer: propTypes.answer,
+  id: PropTypes.number.isRequired
+};
 
 export default ArtistAnswer;
