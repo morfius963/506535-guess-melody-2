@@ -1,17 +1,17 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import WelcomeScreen from "./components/welcome-screen/welcome-scren.jsx";
-import fixtureData from "./__fixtures__/data.js";
+import App from "./components/app/app.jsx";
+import {settings, questions} from "./mocks/questions.js";
 
-const init = () => {
+const init = (gameQuestions) => {
   ReactDOM.render(
-      <WelcomeScreen
-        time = {fixtureData.gameTime}
-        errorCount = {fixtureData.errorCount}
-        onButtonClick = {fixtureData.onButtonClick}
+      <App
+        time = {settings.gameTime}
+        errorCount = {settings.errorCount}
+        questions = {gameQuestions}
       />,
       document.querySelector(`#root`)
   );
 };
 
-init();
+init(questions);

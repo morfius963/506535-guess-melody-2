@@ -1,0 +1,86 @@
+import React, {PureComponent} from "react";
+import PropTypes from "prop-types";
+import WelcomeScreen from "../welcome-screen/welcome-scren.jsx";
+import ArtistQuestionScreen from "../artist-question-screen/artist-question-screen.jsx";
+import GenreQuestionScreen from "../genre-question-screen/genre-question-screen.jsx";
+import propTypes from "./prop-types.js";
+
+class App extends PureComponent {
+  static getScreen(question, props, onUserAnswer) {
+    if (question === -1) {
+      const {time, errorCount} = props;
+
+      return <WelcomeScreen
+        gameTime = {time}
+        errorCount = {errorCount}
+        onButtonClick = {onUserAnswer}
+      />;
+    }
+
+    const {questions} = props;
+    const currentQuestion = questions[question];
+
+    switch (currentQuestion.type) {
+      case `genre`:
+        return <GenreQuestionScreen
+          questions = {currentQuestion}
+          screenIndex = {question}
+          onAnswer = {onUserAnswer}
+        />;
+      case `artist`:
+        return <ArtistQuestionScreen
+          questions = {currentQuestion}
+          screenIndex = {question}
+          onAnswer = {onUserAnswer}
+        />;
+    }
+
+    return null;
+  }
+
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      currentQuestionIndex: -1,
+      answers: {}
+    };
+
+    this._bindedUserAnswerHandler = this._userAnswerHandler.bind(this);
+  }
+
+  render() {
+    const {currentQuestionIndex} = this.state;
+    return App.getScreen(currentQuestionIndex, this.props, this._bindedUserAnswerHandler);
+  }
+
+  _userAnswerHandler(userValue = null) {
+    const {questions} = this.props;
+
+    this.setState((prevState) => {
+      const nextIndex = prevState.currentQuestionIndex + 1;
+      const isEnd = nextIndex >= questions.length;
+
+      return {
+        currentQuestionIndex: isEnd ? -1 : nextIndex,
+        answers: nextIndex <= 0
+          ? {}
+          : Object.assign(
+              {},
+              prevState.answers,
+              {
+                [`question${nextIndex}`]: userValue
+              }
+          )
+      };
+    });
+  }
+}
+
+App.propTypes = {
+  time: PropTypes.number.isRequired,
+  errorCount: PropTypes.number.isRequired,
+  questions: PropTypes.arrayOf(propTypes.question).isRequired
+};
+
+export default App;
