@@ -2,12 +2,11 @@ import React from "react";
 import PropTypes from "prop-types";
 import propTypes from "./prop-types.js";
 
-const GenreAnswer = ({answer, id, checkboxChangeHandler}) => {
+const GenreAnswer = ({answer, id, checkboxChangeHandler, children}) => {
   return <div className="track">
-    <button className="track__button track__button--play" type="button"></button>
-    <div className="track__status">
-      <audio></audio>
-    </div>
+
+    {children}
+
     <div className="game__answer">
       <input
         className="game__input visually-hidden"
@@ -24,7 +23,8 @@ const GenreAnswer = ({answer, id, checkboxChangeHandler}) => {
 GenreAnswer.propTypes = {
   answer: propTypes.answer,
   id: PropTypes.number.isRequired,
-  checkboxChangeHandler: PropTypes.func.isRequired
+  checkboxChangeHandler: PropTypes.func.isRequired,
+  children: PropTypes.element
 };
 
 export default GenreAnswer;
