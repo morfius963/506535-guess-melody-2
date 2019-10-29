@@ -1,7 +1,7 @@
 import React from "react";
 import renderer from "react-test-renderer";
 import ArtistAnswer from "./artist-answer.jsx";
-import {questions} from "../../mocks/questions.js";
+import {questions} from "../../__mocks__/questions.js";
 
 describe(`snapshot test`, () => {
   it(`Component correctly renders`, () => {
