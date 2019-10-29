@@ -1,11 +1,8 @@
 import React from 'react';
-import Enzyme, {shallow} from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
+import {shallow} from 'enzyme';
 import GenreQuestionScreen from "./genre-question-screen.jsx";
 import {questions} from "../../mocks/questions.js";
 import {makeAnswers} from "../../utils.js";
-
-Enzyme.configure({adapter: new Adapter()});
 
 describe(`end to end test`, () => {
   it(`Callback func calls with correct data`, () => {
