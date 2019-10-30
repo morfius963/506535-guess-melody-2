@@ -16,6 +16,9 @@ describe(`end to end test`, () => {
     );
     const trackButton = audioPlayer.find(`.track__button`);
 
+    audioPlayer.setState({isLoading: false});
+    expect(audioPlayer.state().isLoading).toEqual(false);
+
     trackButton.simulate(`click`);
     expect(audioPlayer.state().isPlaying).toEqual(true);
 
