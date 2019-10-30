@@ -10,7 +10,7 @@ class AudioPlayer extends React.PureComponent {
     this.state = {
       progress: 0,
       isLoading: true,
-      isPlaying: false,
+      isPlaying: props.isPlaying,
     };
 
     this._onPlayButtonClick = this._onPlayButtonClick.bind(this);
@@ -87,6 +87,7 @@ class AudioPlayer extends React.PureComponent {
 
   _onPlayButtonClick() {
     this.props.onPlayButtonClick();
+    this.setState({isPlaying: !this.state.isPlaying});
   }
 }
 

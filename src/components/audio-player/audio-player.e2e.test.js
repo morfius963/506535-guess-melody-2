@@ -1,6 +1,6 @@
 import React from 'react';
 import {mount} from 'enzyme';
-import {questions} from "../../__mocks__/questions.js";
+import {questions} from "../../__fixtures__/questions.js";
 import AudioPlayer from "../audio-player/audio-player.jsx";
 
 describe(`end to end test`, () => {

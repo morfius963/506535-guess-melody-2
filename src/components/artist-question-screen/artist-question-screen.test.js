@@ -3,7 +3,7 @@ import renderer from "react-test-renderer";
 import ArtistQuestionScreen from "./artist-question-screen.jsx";
 import GameHeader from "../game-header/game-header";
 import ArtistAnswer from "../artist-answer/artist-answer";
-import {questions} from "../../__mocks__/questions.js";
+import {questions} from "../../__fixtures__/questions.js";
 import AudioPlayer from "../audio-player/audio-player.jsx";
 
 jest.mock(`../game-header/game-header`, () => jest.fn().mockReturnValue(null));

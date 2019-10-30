@@ -3,7 +3,7 @@ import renderer from "react-test-renderer";
 import GenreQuestionScreen from "./genre-question-screen.jsx";
 import GameHeader from "../game-header/game-header";
 import GenreAnswer from "../genre-answer/genre-answer.jsx";
-import {questions} from "../../__mocks__/questions.js";
+import {questions} from "../../__fixtures__/questions.js";
 
 jest.mock(`../game-header/game-header.jsx`, () => jest.fn().mockReturnValue(null));
 jest.mock(`../genre-answer/genre-answer.jsx`, () => jest.fn().mockReturnValue(null));
