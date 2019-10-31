@@ -73,7 +73,7 @@ class App extends PureComponent {
               }
           )
       };
-    });
+    }, () => console.log(this.state));
   }
 }
 

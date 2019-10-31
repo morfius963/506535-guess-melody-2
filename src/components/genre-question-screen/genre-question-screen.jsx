@@ -58,14 +58,10 @@ class GenreQuestionScreen extends PureComponent {
 
   _checkboxChangeHandler(evt) {
     const isChecked = evt.target.checked;
-    const value = evt.target.value;
+    const value = evt.target.value.split(`-`).reverse()[0];
 
     this.setState((prevState) => {
-      if (isChecked) {
-        prevState[value] = prevState[value] + 1;
-      } else {
-        prevState[value] = prevState[value] - 1;
-      }
+      prevState.userAnswer[value] = isChecked;
     });
   }
 }

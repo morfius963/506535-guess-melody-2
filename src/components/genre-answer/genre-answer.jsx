@@ -11,7 +11,7 @@ const GenreAnswer = ({answer, id, checkboxChangeHandler, children}) => {
       <input
         className="game__input visually-hidden"
         type="checkbox" name="answer"
-        value={answer.genre}
+        value={`${answer.genre}-${id}`}
         id={`answer-${id}`}
         onChange={checkboxChangeHandler}
       />
