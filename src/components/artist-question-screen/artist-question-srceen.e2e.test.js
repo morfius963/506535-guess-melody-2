@@ -1,7 +1,7 @@
 import React from 'react';
 import {shallow} from 'enzyme';
 import ArtistQuestionScreen from "./artist-question-screen.jsx";
-import {questions} from "../../mocks/questions.js";
+import {questions} from "../../__fixtures__/questions.js";
 
 describe(`end to end test`, () => {
   it(`Callback func calls with correct data`, () => {

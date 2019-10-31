@@ -3,34 +3,50 @@ import PropTypes from "prop-types";
 import propTypes from "./prop-types.js";
 import GameHeader from "../game-header/game-header.jsx";
 import ArtistAnswer from "../artist-answer/artist-answer.jsx";
+import AudioPlayer from "../audio-player/audio-player.jsx";
 
-const ArtistQuestionScreen = ({questions, screenIndex, onAnswer}) => {
-  const {answers} = questions;
+class ArtistQuestionScreen extends React.PureComponent {
+  constructor(props) {
+    super(props);
 
-  return <section className="game game--artist">
+    this.state = {
+      isPlaying: false
+    };
+  }
 
-    <GameHeader />
+  render() {
+    const {questions, screenIndex, onAnswer} = this.props;
+    const {answers, song} = questions;
+    const {isPlaying} = this.state;
 
-    <section className="game__screen">
-      <h2 className="game__title">Кто исполняет эту песню?</h2>
-      <div className="game__track">
-        <div className="track">
-          <button className="track__button track__button--play" type="button"></button>
-          <div className="track__status">
-            <audio></audio>
+    return <section className="game game--artist">
+
+      <GameHeader />
+
+      <section className="game__screen">
+        <h2 className="game__title">Кто исполняет эту песню?</h2>
+        <div className="game__track">
+          <div className="track">
+
+            <AudioPlayer
+              src={song.src}
+              isPlaying={isPlaying}
+              onPlayButtonClick={() => this.setState({isPlaying: !isPlaying})}
+            />
+
           </div>
         </div>
-      </div>
 
-      <form className="game__artist" onChange={(evt) => {
-        const asnwerValue = evt.target.value;
-        onAnswer(asnwerValue);
-      }}>
-        {answers.map((answer, i) => <ArtistAnswer key={`${screenIndex}-${answer}-${i}`} answer={answer} id={i} />)}
-      </form>
-    </section>
-  </section>;
-};
+        <form className="game__artist" onChange={(evt) => {
+          const asnwerValue = evt.target.value;
+          onAnswer(asnwerValue);
+        }}>
+          {answers.map((answer, i) => <ArtistAnswer key={`${screenIndex}-${answer}-${i}`} answer={answer} id={i} />)}
+        </form>
+      </section>
+    </section>;
+  }
+}
 
 ArtistQuestionScreen.propTypes = {
   questions: propTypes.questions,

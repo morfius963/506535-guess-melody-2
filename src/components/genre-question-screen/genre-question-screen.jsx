@@ -4,12 +4,16 @@ import propTypes from "./prop-types.js";
 import {makeAnswers} from "../../utils.js";
 import GameHeader from "../game-header/game-header.jsx";
 import GenreAnswer from "../genre-answer/genre-answer.jsx";
+import AudioPlayer from "../audio-player/audio-player.jsx";
 
 class GenreQuestionScreen extends PureComponent {
   constructor(props) {
     super(props);
 
-    this.state = makeAnswers(props.questions.answers);
+    this.state = {
+      userAnswer: makeAnswers(props.questions.answers),
+      activeAudioPlayer: -1
+    };
     this._bindedCheckboxChangeHandler = this._checkboxChangeHandler.bind(this);
   }
 
@@ -25,8 +29,11 @@ class GenreQuestionScreen extends PureComponent {
         <h2 className="game__title">Выберите {genre} треки</h2>
         <form className="game__tracks" onSubmit={(evt) => {
           evt.preventDefault();
-          onAnswer(this.state);
-          this.setState(() => makeAnswers(answers));
+          onAnswer(this.state.userAnswer);
+          this.setState({
+            userAnswer: makeAnswers(answers),
+            activeAudioPlayer: -1
+          });
         }}>
           {answers.map((answer, i) =>
             <GenreAnswer
@@ -34,7 +41,15 @@ class GenreQuestionScreen extends PureComponent {
               answer={answer}
               id={i}
               checkboxChangeHandler={this._bindedCheckboxChangeHandler}
-            />)}
+            >
+              <AudioPlayer
+                src={answer.src}
+                isPlaying={this.state.activeAudioPlayer === i}
+                onPlayButtonClick={() => this.setState({
+                  activeAudioPlayer: this.state.activeAudioPlayer === i ? -1 : i
+                })}
+              />
+            </GenreAnswer>)}
           <button className="game__submit button" type="submit">Ответить</button>
         </form>
       </section>

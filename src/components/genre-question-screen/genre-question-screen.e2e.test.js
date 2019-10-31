@@ -1,7 +1,7 @@
 import React from 'react';
 import {shallow} from 'enzyme';
 import GenreQuestionScreen from "./genre-question-screen.jsx";
-import {questions} from "../../mocks/questions.js";
+import {questions} from "../../__fixtures__/questions.js";
 import {makeAnswers} from "../../utils.js";
 
 describe(`end to end test`, () => {

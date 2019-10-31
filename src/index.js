@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import App from "./components/app/app.jsx";
-import {settings, questions} from "./mocks/questions.js";
+import {settings, questions} from "./__fixtures__/questions.js";
 
 const init = (gameQuestions) => {
   ReactDOM.render(
