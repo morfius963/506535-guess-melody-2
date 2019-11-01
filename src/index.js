@@ -5,7 +5,7 @@ import {Provider} from "react-redux";
 
 import App from "./components/app/app.jsx";
 import {settings, questions} from "./__fixtures__/questions.js";
-import {reducer} from "./reducer.js";
+import {reducer} from "./reducer/reducer.js";
 
 const init = (gameQuestions) => {
   const {errorCount, gameTime} = settings;
