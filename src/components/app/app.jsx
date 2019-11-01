@@ -1,86 +1,87 @@
 import React, {PureComponent} from "react";
 import PropTypes from "prop-types";
+import {connect} from "react-redux";
+
+import {ActionCreator} from "../../reducer.js";
 import WelcomeScreen from "../welcome-screen/welcome-scren.jsx";
 import ArtistQuestionScreen from "../artist-question-screen/artist-question-screen.jsx";
 import GenreQuestionScreen from "../genre-question-screen/genre-question-screen.jsx";
 import propTypes from "./prop-types.js";
 
 class App extends PureComponent {
-  static getScreen(question, props, onUserAnswer) {
-    if (question === -1) {
-      const {time, errorCount} = props;
+  render() {
+    const {questions, questionStep} = this.props;
+    return this._getScreen(questions[questionStep]);
+  }
+
+  _getScreen(question) {
+    if (!question) {
+      const {time, maxMistakes, onWelcomeScreenClick} = this.props;
 
       return <WelcomeScreen
         gameTime = {time}
-        errorCount = {errorCount}
-        onButtonClick = {onUserAnswer}
+        errorCount = {maxMistakes}
+        onButtonClick = {onWelcomeScreenClick}
       />;
     }
 
-    const {questions} = props;
-    const currentQuestion = questions[question];
+    const {onUserAnswer, mistakes, maxMistakes, questions} = this.props;
+    const currentQuestionIndex = questions.indexOf(question);
+    const maxQuestionIndex = questions.length;
 
-    switch (currentQuestion.type) {
+    switch (question.type) {
       case `genre`:
         return <GenreQuestionScreen
-          questions = {currentQuestion}
-          screenIndex = {question}
-          onAnswer = {onUserAnswer}
+          questions = {question}
+          onAnswer = {(userAnswer) => onUserAnswer(
+              userAnswer,
+              question,
+              mistakes,
+              maxMistakes,
+              currentQuestionIndex,
+              maxQuestionIndex
+          )}
         />;
       case `artist`:
         return <ArtistQuestionScreen
-          questions = {currentQuestion}
-          screenIndex = {question}
-          onAnswer = {onUserAnswer}
+          questions = {question}
+          onAnswer = {(userAnswer) => onUserAnswer(
+              userAnswer,
+              question,
+              mistakes,
+              maxMistakes,
+              currentQuestionIndex,
+              maxQuestionIndex
+          )}
         />;
     }
 
     return null;
   }
-
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      currentQuestionIndex: -1,
-      answers: {}
-    };
-
-    this._bindedUserAnswerHandler = this._userAnswerHandler.bind(this);
-  }
-
-  render() {
-    const {currentQuestionIndex} = this.state;
-    return App.getScreen(currentQuestionIndex, this.props, this._bindedUserAnswerHandler);
-  }
-
-  _userAnswerHandler(userValue = null) {
-    const {questions} = this.props;
-
-    this.setState((prevState) => {
-      const nextIndex = prevState.currentQuestionIndex + 1;
-      const isEnd = nextIndex >= questions.length;
-
-      return {
-        currentQuestionIndex: isEnd ? -1 : nextIndex,
-        answers: nextIndex <= 0
-          ? {}
-          : Object.assign(
-              {},
-              prevState.answers,
-              {
-                [`question${nextIndex}`]: userValue
-              }
-          )
-      };
-    });
-  }
 }
 
 App.propTypes = {
   time: PropTypes.number.isRequired,
-  errorCount: PropTypes.number.isRequired,
-  questions: PropTypes.arrayOf(propTypes.question).isRequired
+  questions: PropTypes.arrayOf(propTypes.question).isRequired,
+  questionStep: PropTypes.number.isRequired,
+  mistakes: PropTypes.number.isRequired,
+  maxMistakes: PropTypes.number.isRequired,
+  onWelcomeScreenClick: PropTypes.func.isRequired,
+  onUserAnswer: PropTypes.func.isRequired
 };
 
-export default App;
+const mapStateToProps = (state, ownProps) => Object.assign({}, ownProps, {
+  questionStep: state.questionStep,
+  mistakes: state.mistakes
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  onWelcomeScreenClick: () => dispatch(ActionCreator.incrementStep()),
+
+  onUserAnswer: (userAnswer, question, mistakes, maxMistakes, currentQuestionIndex, maxQuestionIndex) => {
+    dispatch(ActionCreator.incrementStep(currentQuestionIndex, maxQuestionIndex));
+    dispatch(ActionCreator.incrementMistake(userAnswer, question, mistakes, maxMistakes));
+  }
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
