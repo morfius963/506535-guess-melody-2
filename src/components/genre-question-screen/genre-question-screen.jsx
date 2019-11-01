@@ -18,7 +18,7 @@ class GenreQuestionScreen extends PureComponent {
   }
 
   render() {
-    const {questions, screenIndex, onAnswer} = this.props;
+    const {questions, onAnswer} = this.props;
     const {answers, genre} = questions;
 
     return <section className="game game--genre">
@@ -37,7 +37,7 @@ class GenreQuestionScreen extends PureComponent {
         }}>
           {answers.map((answer, i) =>
             <GenreAnswer
-              key={`${screenIndex}-answer-${i}`}
+              key={`${Math.random()}-answer-${i}`}
               answer={answer}
               id={i}
               checkboxChangeHandler={this._bindedCheckboxChangeHandler}
@@ -68,7 +68,6 @@ class GenreQuestionScreen extends PureComponent {
 
 GenreQuestionScreen.propTypes = {
   questions: propTypes.questions,
-  screenIndex: PropTypes.number.isRequired,
   onAnswer: PropTypes.func.isRequired,
 };
 

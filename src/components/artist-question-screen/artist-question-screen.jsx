@@ -15,7 +15,7 @@ class ArtistQuestionScreen extends React.PureComponent {
   }
 
   render() {
-    const {questions, screenIndex, onAnswer} = this.props;
+    const {questions, onAnswer} = this.props;
     const {answers, song} = questions;
     const {isPlaying} = this.state;
 
@@ -41,7 +41,7 @@ class ArtistQuestionScreen extends React.PureComponent {
           const asnwerValue = evt.target.value;
           onAnswer(asnwerValue);
         }}>
-          {answers.map((answer, i) => <ArtistAnswer key={`${screenIndex}-${answer}-${i}`} answer={answer} id={i} />)}
+          {answers.map((answer, i) => <ArtistAnswer key={`${Math.random()}-${answer}-${i}`} answer={answer} id={i} />)}
         </form>
       </section>
     </section>;
@@ -50,7 +50,6 @@ class ArtistQuestionScreen extends React.PureComponent {
 
 ArtistQuestionScreen.propTypes = {
   questions: propTypes.questions,
-  screenIndex: PropTypes.number.isRequired,
   onAnswer: PropTypes.func.isRequired,
 };
 
