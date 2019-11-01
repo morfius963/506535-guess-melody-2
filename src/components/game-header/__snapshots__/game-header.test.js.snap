@@ -58,18 +58,5 @@ exports[`snapshot test Component correctly renders 1`] = `
       00
     </span>
   </div>
-  <div
-    className="game__mistakes"
-  >
-    <div
-      className="wrong"
-    />
-    <div
-      className="wrong"
-    />
-    <div
-      className="wrong"
-    />
-  </div>
 </header>
 `;

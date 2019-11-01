@@ -18,6 +18,7 @@ describe(`snapshot test`, () => {
             questions = {currentQuestion}
             screenIndex = {0}
             onAnswer = {clickHandler}
+            mistakes={3}
           />
       )
       .toJSON();
