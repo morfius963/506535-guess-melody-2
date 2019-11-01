@@ -1,9 +1,11 @@
 import React from "react";
 import PropTypes from "prop-types";
+
 import propTypes from "./prop-types.js";
 import GameHeader from "../game-header/game-header.jsx";
 import ArtistAnswer from "../artist-answer/artist-answer.jsx";
 import AudioPlayer from "../audio-player/audio-player.jsx";
+import GameMistakes from "../game-mistakes/game-mistakes.jsx";
 
 class ArtistQuestionScreen extends React.PureComponent {
   constructor(props) {
@@ -15,13 +17,15 @@ class ArtistQuestionScreen extends React.PureComponent {
   }
 
   render() {
-    const {questions, onAnswer} = this.props;
+    const {questions, onAnswer, mistakes} = this.props;
     const {answers, song} = questions;
     const {isPlaying} = this.state;
 
     return <section className="game game--artist">
 
-      <GameHeader />
+      <GameHeader>
+        <GameMistakes mistakes={mistakes} />
+      </GameHeader>
 
       <section className="game__screen">
         <h2 className="game__title">Кто исполняет эту песню?</h2>
@@ -51,6 +55,7 @@ class ArtistQuestionScreen extends React.PureComponent {
 ArtistQuestionScreen.propTypes = {
   questions: propTypes.questions,
   onAnswer: PropTypes.func.isRequired,
+  mistakes: PropTypes.number.isRequired
 };
 
 export default ArtistQuestionScreen;

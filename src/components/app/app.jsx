@@ -2,7 +2,7 @@ import React, {PureComponent} from "react";
 import PropTypes from "prop-types";
 import {connect} from "react-redux";
 
-import {ActionCreator} from "../../reducer.js";
+import {ActionCreator} from "../../reducer/reducer.js/index.js";
 import WelcomeScreen from "../welcome-screen/welcome-scren.jsx";
 import ArtistQuestionScreen from "../artist-question-screen/artist-question-screen.jsx";
 import GenreQuestionScreen from "../genre-question-screen/genre-question-screen.jsx";
@@ -33,6 +33,7 @@ class App extends PureComponent {
       case `genre`:
         return <GenreQuestionScreen
           questions = {question}
+          mistakes={mistakes}
           onAnswer = {(userAnswer) => onUserAnswer(
               userAnswer,
               question,
@@ -45,6 +46,7 @@ class App extends PureComponent {
       case `artist`:
         return <ArtistQuestionScreen
           questions = {question}
+          mistakes={mistakes}
           onAnswer = {(userAnswer) => onUserAnswer(
               userAnswer,
               question,

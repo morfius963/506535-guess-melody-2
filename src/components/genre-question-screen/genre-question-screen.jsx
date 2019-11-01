@@ -1,10 +1,12 @@
 import React, {PureComponent} from "react";
 import PropTypes from "prop-types";
+
 import propTypes from "./prop-types.js";
 import {makeAnswers} from "../../utils.js";
 import GameHeader from "../game-header/game-header.jsx";
 import GenreAnswer from "../genre-answer/genre-answer.jsx";
 import AudioPlayer from "../audio-player/audio-player.jsx";
+import GameMistakes from "../game-mistakes/game-mistakes.jsx";
 
 class GenreQuestionScreen extends PureComponent {
   constructor(props) {
@@ -18,12 +20,14 @@ class GenreQuestionScreen extends PureComponent {
   }
 
   render() {
-    const {questions, onAnswer} = this.props;
+    const {questions, onAnswer, mistakes} = this.props;
     const {answers, genre} = questions;
 
     return <section className="game game--genre">
 
-      <GameHeader />
+      <GameHeader>
+        <GameMistakes mistakes={mistakes} />
+      </GameHeader>
 
       <section className="game__screen">
         <h2 className="game__title">Выберите {genre} треки</h2>
@@ -69,6 +73,7 @@ class GenreQuestionScreen extends PureComponent {
 GenreQuestionScreen.propTypes = {
   questions: propTypes.questions,
   onAnswer: PropTypes.func.isRequired,
+  mistakes: PropTypes.number.isRequired
 };
 
 export default GenreQuestionScreen;

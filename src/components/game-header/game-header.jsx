@@ -1,6 +1,7 @@
 import React from "react";
+import propTypes from "./prop-types.js";
 
-const GameHeader = () => {
+const GameHeader = ({children}) => {
   return <header className="game__header">
     <a className="game__back" href="#">
       <span className="visually-hidden">Сыграть ещё раз</span>
@@ -17,12 +18,11 @@ const GameHeader = () => {
       <span className="timer__secs">00</span>
     </div>
 
-    <div className="game__mistakes">
-      <div className="wrong"></div>
-      <div className="wrong"></div>
-      <div className="wrong"></div>
-    </div>
+    {children}
+
   </header>;
 };
+
+GameHeader.propTypes = propTypes;
 
 export default GameHeader;
