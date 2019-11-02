@@ -2,30 +2,40 @@ import React, {PureComponent} from "react";
 import PropTypes from "prop-types";
 import {connect} from "react-redux";
 
-import {ActionCreator} from "../../reducer/reducer.js/index.js";
+import {ActionCreator} from "../../reducer/reducer.js";
 import WelcomeScreen from "../welcome-screen/welcome-scren.jsx";
 import ArtistQuestionScreen from "../artist-question-screen/artist-question-screen.jsx";
 import GenreQuestionScreen from "../genre-question-screen/genre-question-screen.jsx";
+import GameHeader from "../game-header/game-header.jsx";
 import propTypes from "./prop-types.js";
 
 class App extends PureComponent {
   render() {
-    const {questions, questionStep} = this.props;
-    return this._getScreen(questions[questionStep]);
+    const {questions, questionStep, mistakes, maxMistakes, time, onTimeUpdate, onTimeEnd} = this.props;
+    const currentQuestion = questions[questionStep];
+
+    return <section className="game">
+
+      {currentQuestion && <GameHeader mistakes={mistakes} maxMistakes={maxMistakes} gameTime={time} onTimeUpdate={onTimeUpdate} onTimeEnd={onTimeEnd} />}
+
+      {this._getScreen(currentQuestion)}
+
+    </section>;
   }
 
   _getScreen(question) {
     if (!question) {
       const {time, maxMistakes, onWelcomeScreenClick} = this.props;
+      const timeInMin = time / 60 / 1000;
 
       return <WelcomeScreen
-        gameTime = {time}
+        gameTime = {timeInMin}
         errorCount = {maxMistakes}
         onButtonClick = {onWelcomeScreenClick}
       />;
     }
 
-    const {onUserAnswer, mistakes, maxMistakes, questions} = this.props;
+    const {onUserAnswer, mistakes, maxMistakes, questions, questionStep} = this.props;
     const currentQuestionIndex = questions.indexOf(question);
     const maxQuestionIndex = questions.length;
 
@@ -33,7 +43,7 @@ class App extends PureComponent {
       case `genre`:
         return <GenreQuestionScreen
           questions = {question}
-          mistakes={mistakes}
+          screenIndex={questionStep}
           onAnswer = {(userAnswer) => onUserAnswer(
               userAnswer,
               question,
@@ -46,7 +56,7 @@ class App extends PureComponent {
       case `artist`:
         return <ArtistQuestionScreen
           questions = {question}
-          mistakes={mistakes}
+          screenIndex={questionStep}
           onAnswer = {(userAnswer) => onUserAnswer(
               userAnswer,
               question,
@@ -69,12 +79,15 @@ App.propTypes = {
   mistakes: PropTypes.number.isRequired,
   maxMistakes: PropTypes.number.isRequired,
   onWelcomeScreenClick: PropTypes.func.isRequired,
-  onUserAnswer: PropTypes.func.isRequired
+  onUserAnswer: PropTypes.func.isRequired,
+  onTimeUpdate: PropTypes.func.isRequired,
+  onTimeEnd: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state, ownProps) => Object.assign({}, ownProps, {
   questionStep: state.questionStep,
-  mistakes: state.mistakes
+  mistakes: state.mistakes,
+  time: state.time
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -83,7 +96,11 @@ const mapDispatchToProps = (dispatch) => ({
   onUserAnswer: (userAnswer, question, mistakes, maxMistakes, currentQuestionIndex, maxQuestionIndex) => {
     dispatch(ActionCreator.incrementStep(currentQuestionIndex, maxQuestionIndex));
     dispatch(ActionCreator.incrementMistake(userAnswer, question, mistakes, maxMistakes));
-  }
+  },
+
+  onTimeUpdate: () => dispatch(ActionCreator.decrementTime()),
+
+  onTimeEnd: () => dispatch(ActionCreator.resetGame()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
