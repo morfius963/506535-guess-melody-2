@@ -2,29 +2,25 @@
 
 exports[`snapshot test Component correctly renders 1`] = `
 <section
-  className="game game--genre"
+  className="game__screen"
 >
-  <section
-    className="game__screen"
+  <h2
+    className="game__title"
   >
-    <h2
-      className="game__title"
+    Выберите 
+    rock
+     треки
+  </h2>
+  <form
+    className="game__tracks"
+    onSubmit={[Function]}
+  >
+    <button
+      className="game__submit button"
+      type="submit"
     >
-      Выберите 
-      rock
-       треки
-    </h2>
-    <form
-      className="game__tracks"
-      onSubmit={[Function]}
-    >
-      <button
-        className="game__submit button"
-        type="submit"
-      >
-        Ответить
-      </button>
-    </form>
-  </section>
+      Ответить
+    </button>
+  </form>
 </section>
 `;

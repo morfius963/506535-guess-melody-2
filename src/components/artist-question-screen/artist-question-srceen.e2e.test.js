@@ -17,7 +17,6 @@ describe(`end to end test`, () => {
           questions = {currentQuestion}
           screenIndex = {0}
           onAnswer = {clickHandler}
-          mistakes={3}
         />
     );
     const form = app.find(`.game__artist`);
