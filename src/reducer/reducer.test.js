@@ -5,7 +5,8 @@ describe(`Reducer test group`, () => {
     expect(reducer(
         {
           questionStep: -1,
-          mistakes: 0
+          mistakes: 0,
+          time: 300000
         },
         {
           type: `INCREMENT_STEP`,
@@ -13,7 +14,8 @@ describe(`Reducer test group`, () => {
         }
     )).toEqual({
       questionStep: 0,
-      mistakes: 0
+      mistakes: 0,
+      time: 300000
     });
   });
 
@@ -21,7 +23,8 @@ describe(`Reducer test group`, () => {
     expect(reducer(
         {
           questionStep: -1,
-          mistakes: 0
+          mistakes: 0,
+          time: 300000
         },
         {
           type: `INCREMENT_MISTAKES`,
@@ -29,7 +32,8 @@ describe(`Reducer test group`, () => {
         }
     )).toEqual({
       questionStep: -1,
-      mistakes: 2
+      mistakes: 2,
+      time: 300000
     });
   });
 
@@ -37,14 +41,16 @@ describe(`Reducer test group`, () => {
     expect(reducer(
         {
           questionStep: 1232,
-          mistakes: 213
+          mistakes: 213,
+          time: 300000
         },
         {
           type: `RESET`
         }
     )).toEqual({
       questionStep: -1,
-      mistakes: 0
+      mistakes: 0,
+      time: 300000
     });
   });
 
@@ -56,7 +62,26 @@ describe(`Reducer test group`, () => {
         }
     )).toEqual({
       questionStep: -1,
-      mistakes: 0
+      mistakes: 0,
+      time: 300000
+    });
+  });
+
+  it(`Reducer correctly decrements time`, () => {
+    expect(reducer(
+        {
+          questionStep: -1,
+          mistakes: 0,
+          time: 300000
+        },
+        {
+          type: `DECREMENT_TIME`,
+          payload: 1000
+        }
+    )).toEqual({
+      questionStep: -1,
+      mistakes: 0,
+      time: 299000
     });
   });
 });
