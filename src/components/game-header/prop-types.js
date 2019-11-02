@@ -1,5 +1,9 @@
 import PropTypes from "prop-types";
 
 export default {
-  children: PropTypes.element
+  mistakes: PropTypes.number.isRequired,
+  maxMistakes: PropTypes.number.isRequired,
+  gameTime: PropTypes.number.isRequired,
+  onTimeUpdate: PropTypes.func.isRequired,
+  onTimeEnd: PropTypes.func.isRequired
 };
