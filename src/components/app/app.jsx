@@ -1,86 +1,109 @@
 import React, {PureComponent} from "react";
 import PropTypes from "prop-types";
+import {connect} from "react-redux";
+
+import {ActionCreator} from "../../reducer/reducer.js";
 import WelcomeScreen from "../welcome-screen/welcome-scren.jsx";
 import ArtistQuestionScreen from "../artist-question-screen/artist-question-screen.jsx";
 import GenreQuestionScreen from "../genre-question-screen/genre-question-screen.jsx";
+import GameHeader from "../game-header/game-header.jsx";
 import propTypes from "./prop-types.js";
 
 class App extends PureComponent {
-  static getScreen(question, props, onUserAnswer) {
-    if (question === -1) {
-      const {time, errorCount} = props;
+  render() {
+    const {questions, questionStep, mistakes, time, onTimeUpdate, onTimeEnd, registrateTimer} = this.props;
+    const currentQuestion = questions[questionStep];
+
+    return <section className="game">
+
+      {currentQuestion && <GameHeader mistakes={mistakes} gameTime={time} registrateTimer={registrateTimer} onTimeUpdate={onTimeUpdate} onTimeEnd={onTimeEnd} />}
+
+      {this._getScreen(currentQuestion)}
+
+    </section>;
+  }
+
+  _getScreen(question) {
+    if (!question) {
+      const {time, maxMistakes, onWelcomeScreenClick} = this.props;
+      const timeInMin = time / 60 / 1000;
 
       return <WelcomeScreen
-        gameTime = {time}
-        errorCount = {errorCount}
-        onButtonClick = {onUserAnswer}
+        gameTime = {timeInMin}
+        errorCount = {maxMistakes}
+        onButtonClick = {onWelcomeScreenClick}
       />;
     }
 
-    const {questions} = props;
-    const currentQuestion = questions[question];
+    const {onUserAnswer, mistakes, maxMistakes, questions, questionStep} = this.props;
+    const currentQuestionIndex = questions.indexOf(question);
+    const maxQuestionIndex = questions.length;
 
-    switch (currentQuestion.type) {
+    switch (question.type) {
       case `genre`:
         return <GenreQuestionScreen
-          questions = {currentQuestion}
-          screenIndex = {question}
-          onAnswer = {onUserAnswer}
+          questions = {question}
+          screenIndex={questionStep}
+          onAnswer = {(userAnswer) => onUserAnswer(
+              userAnswer,
+              question,
+              mistakes,
+              maxMistakes,
+              currentQuestionIndex,
+              maxQuestionIndex
+          )}
         />;
       case `artist`:
         return <ArtistQuestionScreen
-          questions = {currentQuestion}
-          screenIndex = {question}
-          onAnswer = {onUserAnswer}
+          questions = {question}
+          screenIndex={questionStep}
+          onAnswer = {(userAnswer) => onUserAnswer(
+              userAnswer,
+              question,
+              mistakes,
+              maxMistakes,
+              currentQuestionIndex,
+              maxQuestionIndex
+          )}
         />;
     }
 
     return null;
   }
-
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      currentQuestionIndex: -1,
-      answers: {}
-    };
-
-    this._bindedUserAnswerHandler = this._userAnswerHandler.bind(this);
-  }
-
-  render() {
-    const {currentQuestionIndex} = this.state;
-    return App.getScreen(currentQuestionIndex, this.props, this._bindedUserAnswerHandler);
-  }
-
-  _userAnswerHandler(userValue = null) {
-    const {questions} = this.props;
-
-    this.setState((prevState) => {
-      const nextIndex = prevState.currentQuestionIndex + 1;
-      const isEnd = nextIndex >= questions.length;
-
-      return {
-        currentQuestionIndex: isEnd ? -1 : nextIndex,
-        answers: nextIndex <= 0
-          ? {}
-          : Object.assign(
-              {},
-              prevState.answers,
-              {
-                [`question${nextIndex}`]: userValue
-              }
-          )
-      };
-    });
-  }
 }
 
 App.propTypes = {
   time: PropTypes.number.isRequired,
-  errorCount: PropTypes.number.isRequired,
-  questions: PropTypes.arrayOf(propTypes.question).isRequired
+  questions: PropTypes.arrayOf(propTypes.question).isRequired,
+  questionStep: PropTypes.number.isRequired,
+  mistakes: PropTypes.number.isRequired,
+  maxMistakes: PropTypes.number.isRequired,
+  onWelcomeScreenClick: PropTypes.func.isRequired,
+  onUserAnswer: PropTypes.func.isRequired,
+  onTimeUpdate: PropTypes.func.isRequired,
+  onTimeEnd: PropTypes.func.isRequired,
+  registrateTimer: PropTypes.func.isRequired
 };
 
-export default App;
+const mapStateToProps = (state, ownProps) => Object.assign({}, ownProps, {
+  questionStep: state.questionStep,
+  mistakes: state.mistakes,
+  time: state.time
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  onWelcomeScreenClick: () => dispatch(ActionCreator.incrementStep()),
+
+  onUserAnswer: (userAnswer, question, mistakes, maxMistakes, currentQuestionIndex, maxQuestionIndex) => {
+    dispatch(ActionCreator.incrementStep(currentQuestionIndex, maxQuestionIndex));
+    dispatch(ActionCreator.incrementMistake(userAnswer, question, mistakes, maxMistakes));
+  },
+
+  onTimeUpdate: () => dispatch(ActionCreator.decrementTime()),
+
+  onTimeEnd: () => dispatch(ActionCreator.resetGame()),
+
+  registrateTimer: (id) => dispatch(ActionCreator.registrateTimer(id))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

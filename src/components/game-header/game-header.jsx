@@ -1,6 +1,9 @@
 import React from "react";
+import propTypes from "./prop-types.js";
+import GameTime from "../game-time/game-time.jsx";
+import GameMistakes from "../game-mistakes/game-mistakes.jsx";
 
-const GameHeader = () => {
+const GameHeader = ({mistakes, gameTime, onTimeUpdate, onTimeEnd, registrateTimer}) => {
   return <header className="game__header">
     <a className="game__back" href="#">
       <span className="visually-hidden">Сыграть ещё раз</span>
@@ -11,18 +14,13 @@ const GameHeader = () => {
       <circle className="timer__line" cx="390" cy="390" r="370" style={{filter: `url(#blur)`, transform: `rotate(-90deg) scaleY(-1)`, transformOrigin: `center`}} />
     </svg>
 
-    <div className="timer__value" xmlns="http://www.w3.org/1999/xhtml">
-      <span className="timer__mins">05</span>
-      <span className="timer__dots">:</span>
-      <span className="timer__secs">00</span>
-    </div>
+    <GameTime time={gameTime} onTimeUpdate={onTimeUpdate} onTimeEnd={onTimeEnd} registrateTimer={registrateTimer} />
 
-    <div className="game__mistakes">
-      <div className="wrong"></div>
-      <div className="wrong"></div>
-      <div className="wrong"></div>
-    </div>
+    <GameMistakes mistakes={mistakes} />
+
   </header>;
 };
+
+GameHeader.propTypes = propTypes;
 
 export default GameHeader;

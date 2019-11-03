@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
+
 import propTypes from "./prop-types.js";
-import GameHeader from "../game-header/game-header.jsx";
 import ArtistAnswer from "../artist-answer/artist-answer.jsx";
 import AudioPlayer from "../audio-player/audio-player.jsx";
 
@@ -15,43 +15,38 @@ class ArtistQuestionScreen extends React.PureComponent {
   }
 
   render() {
-    const {questions, screenIndex, onAnswer} = this.props;
+    const {questions, onAnswer, screenIndex} = this.props;
     const {answers, song} = questions;
     const {isPlaying} = this.state;
 
-    return <section className="game game--artist">
+    return <section className="game__screen">
+      <h2 className="game__title">Кто исполняет эту песню?</h2>
+      <div className="game__track">
+        <div className="track">
 
-      <GameHeader />
+          <AudioPlayer
+            src={song.src}
+            isPlaying={isPlaying}
+            onPlayButtonClick={() => this.setState({isPlaying: !isPlaying})}
+          />
 
-      <section className="game__screen">
-        <h2 className="game__title">Кто исполняет эту песню?</h2>
-        <div className="game__track">
-          <div className="track">
-
-            <AudioPlayer
-              src={song.src}
-              isPlaying={isPlaying}
-              onPlayButtonClick={() => this.setState({isPlaying: !isPlaying})}
-            />
-
-          </div>
         </div>
+      </div>
 
-        <form className="game__artist" onChange={(evt) => {
-          const asnwerValue = evt.target.value;
-          onAnswer(asnwerValue);
-        }}>
-          {answers.map((answer, i) => <ArtistAnswer key={`${screenIndex}-${answer}-${i}`} answer={answer} id={i} />)}
-        </form>
-      </section>
+      <form className="game__artist" onChange={(evt) => {
+        const asnwerValue = evt.target.value;
+        onAnswer(asnwerValue);
+      }}>
+        {answers.map((answer, i) => <ArtistAnswer key={`${screenIndex}-${answer}-${i}`} answer={answer} id={i} />)}
+      </form>
     </section>;
   }
 }
 
 ArtistQuestionScreen.propTypes = {
   questions: propTypes.questions,
-  screenIndex: PropTypes.number.isRequired,
   onAnswer: PropTypes.func.isRequired,
+  screenIndex: PropTypes.number.isRequired
 };
 
 export default ArtistQuestionScreen;

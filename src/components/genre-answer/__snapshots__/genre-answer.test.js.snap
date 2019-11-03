@@ -13,7 +13,7 @@ exports[`snapshot test Component correctly renders 1`] = `
       name="answer"
       onChange={[MockFunction]}
       type="checkbox"
-      value="rock"
+      value="rock-0"
     />
     <label
       className="game__check"

@@ -1,6 +1,6 @@
 export const settings = {
   gameTime: 5,
-  errorCount: 2,
+  errorCount: 3,
   onButtonClick: () => {}
 };
 
@@ -29,7 +29,7 @@ export const questions = [
   },
   {
     type: `genre`,
-    genre: `folk`,
+    genre: `pop`,
     answers: [
       {
         src: `https://upload.wikimedia.org/wikipedia/commons/6/64/Ugandan_national_anthem%2C_performed_by_the_U.S._Navy_Band.ogg`,
