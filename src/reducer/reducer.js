@@ -13,7 +13,8 @@ const isGenreAnswerCorrect = (userAnswer, question) => (
 const initialAppState = {
   questionStep: -1,
   mistakes: 0,
-  time: GAME_TIME_MINUTES * 60 * 1000
+  time: GAME_TIME_MINUTES * 60 * 1000,
+  gameTimer: null
 };
 
 const ActionCreator = {
@@ -42,7 +43,7 @@ const ActionCreator = {
         break;
     }
 
-    if ((!answerIsCorrect && mistakes >= maxMistakes)) {
+    if ((!answerIsCorrect && mistakes + 1 >= maxMistakes)) {
       return {
         type: `RESET`
       };
@@ -65,6 +66,13 @@ const ActionCreator = {
     return {
       type: `RESET`
     };
+  },
+
+  registrateTimer: (id) => {
+    return {
+      type: `REGISTRATE_TIMER`,
+      payload: id
+    };
   }
 };
 
@@ -74,16 +82,24 @@ const reducer = (state = initialAppState, action) => {
       questionStep: state.questionStep + action.payload
     });
 
-    case `INCREMENT_MISTAKES`: return Object.assign({}, state, {
-      mistakes: state.mistakes + action.payload
-    });
+    case `INCREMENT_MISTAKES`: {
+      return Object.assign({}, state, {
+        mistakes: state.mistakes + (state.questionStep === -1 ? 0 : action.payload)
+      });
+    }
 
     case `DECREMENT_TIME`:
       return Object.assign({}, state, {
         time: state.time - action.payload
       });
 
-    case `RESET`: return Object.assign({}, initialAppState);
+    case `REGISTRATE_TIMER`: return Object.assign({}, state, {
+      gameTimer: action.payload
+    });
+
+    case `RESET`:
+      clearInterval(state.gameTimer);
+      return Object.assign({}, initialAppState);
   }
 
   return state;

@@ -16,7 +16,7 @@ describe(`snapshot test`, () => {
         onTimeEnd={handler}
         onTimeUpdate={handler}
         mistakes={0}
-        maxMistakes={3}
+        registrateTimer={jest.fn()}
       />)
       .toJSON();
     expect(GameTime).toHaveBeenCalled();

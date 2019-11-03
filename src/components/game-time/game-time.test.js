@@ -10,8 +10,7 @@ describe(`snapshot test`, () => {
         time={5000}
         onTimeEnd={handler}
         onTimeUpdate={handler}
-        mistakes={0}
-        maxMistakes={3}
+        registrateTimer={jest.fn()}
       />)
       .toJSON();
 

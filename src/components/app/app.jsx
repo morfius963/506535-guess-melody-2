@@ -11,12 +11,12 @@ import propTypes from "./prop-types.js";
 
 class App extends PureComponent {
   render() {
-    const {questions, questionStep, mistakes, maxMistakes, time, onTimeUpdate, onTimeEnd} = this.props;
+    const {questions, questionStep, mistakes, time, onTimeUpdate, onTimeEnd, registrateTimer} = this.props;
     const currentQuestion = questions[questionStep];
 
     return <section className="game">
 
-      {currentQuestion && <GameHeader mistakes={mistakes} maxMistakes={maxMistakes} gameTime={time} onTimeUpdate={onTimeUpdate} onTimeEnd={onTimeEnd} />}
+      {currentQuestion && <GameHeader mistakes={mistakes} gameTime={time} registrateTimer={registrateTimer} onTimeUpdate={onTimeUpdate} onTimeEnd={onTimeEnd} />}
 
       {this._getScreen(currentQuestion)}
 
@@ -81,7 +81,8 @@ App.propTypes = {
   onWelcomeScreenClick: PropTypes.func.isRequired,
   onUserAnswer: PropTypes.func.isRequired,
   onTimeUpdate: PropTypes.func.isRequired,
-  onTimeEnd: PropTypes.func.isRequired
+  onTimeEnd: PropTypes.func.isRequired,
+  registrateTimer: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state, ownProps) => Object.assign({}, ownProps, {
@@ -101,6 +102,8 @@ const mapDispatchToProps = (dispatch) => ({
   onTimeUpdate: () => dispatch(ActionCreator.decrementTime()),
 
   onTimeEnd: () => dispatch(ActionCreator.resetGame()),
+
+  registrateTimer: (id) => dispatch(ActionCreator.registrateTimer(id))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

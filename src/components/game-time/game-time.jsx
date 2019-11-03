@@ -5,7 +5,7 @@ class GameTime extends React.PureComponent {
   constructor(props) {
     super(props);
 
-    this._start();
+    props.registrateTimer(this._start());
   }
 
   render() {
@@ -21,16 +21,15 @@ class GameTime extends React.PureComponent {
   }
 
   _start() {
-    const timerId = setInterval(() => {
-      this._tick(timerId);
+    return setInterval(() => {
+      this._tick();
     }, 1000);
   }
 
-  _tick(id = 0) {
-    const {onTimeUpdate, onTimeEnd, time, mistakes, maxMistakes} = this.props;
+  _tick() {
+    const {onTimeUpdate, onTimeEnd, time} = this.props;
 
-    if (time <= 0 || mistakes >= maxMistakes) {
-      clearInterval(id);
+    if (time <= 0) {
       return onTimeEnd();
     }
 

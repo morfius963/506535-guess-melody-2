@@ -11,8 +11,7 @@ describe(`end to end test`, () => {
           time={300000}
           onTimeEnd={timeEndHandler}
           onTimeUpdate={timeUpdateHandler}
-          mistakes={0}
-          maxMistakes={3}
+          registrateTimer={jest.fn()}
         />
     );
 

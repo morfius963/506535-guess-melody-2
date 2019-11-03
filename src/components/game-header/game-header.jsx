@@ -3,7 +3,7 @@ import propTypes from "./prop-types.js";
 import GameTime from "../game-time/game-time.jsx";
 import GameMistakes from "../game-mistakes/game-mistakes.jsx";
 
-const GameHeader = ({mistakes, maxMistakes, gameTime, onTimeUpdate, onTimeEnd}) => {
+const GameHeader = ({mistakes, gameTime, onTimeUpdate, onTimeEnd, registrateTimer}) => {
   return <header className="game__header">
     <a className="game__back" href="#">
       <span className="visually-hidden">Сыграть ещё раз</span>
@@ -14,7 +14,7 @@ const GameHeader = ({mistakes, maxMistakes, gameTime, onTimeUpdate, onTimeEnd}) 
       <circle className="timer__line" cx="390" cy="390" r="370" style={{filter: `url(#blur)`, transform: `rotate(-90deg) scaleY(-1)`, transformOrigin: `center`}} />
     </svg>
 
-    <GameTime time={gameTime} mistakes={mistakes} maxMistakes={maxMistakes} onTimeUpdate={onTimeUpdate} onTimeEnd={onTimeEnd} />
+    <GameTime time={gameTime} onTimeUpdate={onTimeUpdate} onTimeEnd={onTimeEnd} registrateTimer={registrateTimer} />
 
     <GameMistakes mistakes={mistakes} />
 
