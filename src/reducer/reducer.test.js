@@ -6,7 +6,8 @@ describe(`Reducer test group`, () => {
         {
           questionStep: -1,
           mistakes: 0,
-          time: 300000
+          time: 300000,
+          gameTimer: null
         },
         {
           type: `INCREMENT_STEP`,
@@ -15,25 +16,28 @@ describe(`Reducer test group`, () => {
     )).toEqual({
       questionStep: 0,
       mistakes: 0,
-      time: 300000
+      time: 300000,
+      gameTimer: null
     });
   });
 
   it(`Reducer correctly increments mistakes`, () => {
     expect(reducer(
         {
-          questionStep: -1,
+          questionStep: 0,
           mistakes: 0,
-          time: 300000
+          time: 300000,
+          gameTimer: null
         },
         {
           type: `INCREMENT_MISTAKES`,
           payload: 2
         }
     )).toEqual({
-      questionStep: -1,
+      questionStep: 0,
       mistakes: 2,
-      time: 300000
+      time: 300000,
+      gameTimer: null
     });
   });
 
@@ -42,7 +46,8 @@ describe(`Reducer test group`, () => {
         {
           questionStep: 1232,
           mistakes: 213,
-          time: 300000
+          time: 300000,
+          gameTimer: null
         },
         {
           type: `RESET`
@@ -50,7 +55,8 @@ describe(`Reducer test group`, () => {
     )).toEqual({
       questionStep: -1,
       mistakes: 0,
-      time: 300000
+      time: 300000,
+      gameTimer: null
     });
   });
 
@@ -63,7 +69,8 @@ describe(`Reducer test group`, () => {
     )).toEqual({
       questionStep: -1,
       mistakes: 0,
-      time: 300000
+      time: 300000,
+      gameTimer: null
     });
   });
 
@@ -72,7 +79,8 @@ describe(`Reducer test group`, () => {
         {
           questionStep: -1,
           mistakes: 0,
-          time: 300000
+          time: 300000,
+          gameTimer: null
         },
         {
           type: `DECREMENT_TIME`,
@@ -81,7 +89,8 @@ describe(`Reducer test group`, () => {
     )).toEqual({
       questionStep: -1,
       mistakes: 0,
-      time: 299000
+      time: 299000,
+      gameTimer: null
     });
   });
 });
