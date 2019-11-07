@@ -3,8 +3,8 @@ import propTypes from "./prop-types.js";
 
 const GameMistakes = ({mistakes}) => {
   return <div className="game__mistakes">
-    {new Array(mistakes).fill(``).map(() =>
-      <div key={Math.random() + mistakes} className="wrong"></div>
+    {new Array(mistakes).fill(``).map((elem, i) =>
+      <div key={`${mistakes}-${i}`} className="wrong"></div>
     )}
   </div>;
 };
