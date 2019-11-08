@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useCallback} from "react";
 import PropTypes from "prop-types";
 
 import propTypes from "./prop-types.js";
@@ -8,12 +8,15 @@ const GenreQuestionScreen = (props) => {
   const {questions, onAnswer, screenIndex, renderPlayer, onChange, userAnswer, resetUserAnswer, resetActivePlayerValue} = props;
   const {answers, genre} = questions;
 
-  const formSubmitHandler = (evt) => {
-    evt.preventDefault();
-    onAnswer(userAnswer);
-    resetUserAnswer();
-    resetActivePlayerValue();
-  };
+  const formSubmitHandler = useCallback(
+      (evt) => {
+        evt.preventDefault();
+        onAnswer(userAnswer);
+        resetUserAnswer();
+        resetActivePlayerValue();
+      },
+      [onAnswer, resetUserAnswer, resetActivePlayerValue]
+  );
 
   return <section className="game__screen">
     <h2 className="game__title">Выберите {genre} треки</h2>

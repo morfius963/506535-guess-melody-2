@@ -14,6 +14,7 @@ const withAudioPlayer = (Component) => {
       };
 
       this._onPlayButtonClick = this._onPlayButtonClick.bind(this);
+      this._onAudioCanPlayThrough = this._onAudioCanPlayThrough.bind(this);
     }
 
     render() {
@@ -31,11 +32,7 @@ const withAudioPlayer = (Component) => {
 
       audio.src = src;
 
-      audio.oncanplaythrough = () => {
-        this.setState({
-          isLoading: false,
-        });
-      };
+      audio.addEventListener(`canplaythrough`, this._onAudioCanPlayThrough);
     }
 
     componentDidUpdate() {
@@ -51,10 +48,7 @@ const withAudioPlayer = (Component) => {
     componentWillUnmount() {
       const audio = this._audioRef.current;
 
-      audio.oncanplaythrough = null;
-      audio.onplay = null;
-      audio.onpause = null;
-      audio.ontimeupdate = null;
+      audio.removeEventListener(`canplaythrough`, this._onAudioCanPlayThrough);
       audio.src = ``;
     }
 
@@ -62,9 +56,15 @@ const withAudioPlayer = (Component) => {
       return React.createRef();
     }
 
-    _onPlayButtonClick() {
-      this.props.onPlayButtonClick();
+    _onPlayButtonClick(id) {
+      this.props.onPlayButtonClick(id);
       this.setState({isPlaying: !this.state.isPlaying});
+    }
+
+    _onAudioCanPlayThrough() {
+      this.setState({
+        isLoading: false,
+      });
     }
   }
 

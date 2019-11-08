@@ -8,5 +8,6 @@ export default {
     PropTypes.shape({current: PropTypes.instanceOf(Element)})
   ]),
   isLoading: PropTypes.bool.isRequired,
-  src: PropTypes.string.isRequired
+  src: PropTypes.string.isRequired,
+  id: PropTypes.number.isRequired
 };

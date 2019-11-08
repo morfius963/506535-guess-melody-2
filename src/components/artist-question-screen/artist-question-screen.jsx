@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useCallback} from "react";
 import PropTypes from "prop-types";
 
 import propTypes from "./prop-types.js";
@@ -7,11 +7,14 @@ import ArtistAnswer from "../artist-answer/artist-answer.jsx";
 const ArtistQuestionScreen = ({questions, onAnswer, screenIndex, renderPlayer, resetActivePlayerValue}) => {
   const {answers, song} = questions;
 
-  const formChangeHandler = (evt) => {
-    const asnwerValue = evt.target.value;
-    onAnswer(asnwerValue);
-    resetActivePlayerValue();
-  };
+  const formChangeHandler = useCallback(
+      (evt) => {
+        const asnwerValue = evt.target.value;
+        onAnswer(asnwerValue);
+        resetActivePlayerValue();
+      },
+      [onAnswer, resetActivePlayerValue]
+  );
 
   return <section className="game__screen">
     <h2 className="game__title">Кто исполняет эту песню?</h2>

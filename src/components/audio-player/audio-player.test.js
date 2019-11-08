@@ -15,6 +15,7 @@ describe(`snapshot test`, () => {
       isLoading: false,
       onPlayButtonClick: jest.fn(),
       audioRef: ref,
+      id: 0
     };
     const createNodeMock = () => {
       return {
