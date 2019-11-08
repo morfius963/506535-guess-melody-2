@@ -1,27 +1,37 @@
 import React from 'react';
-import {shallow} from 'enzyme';
+import {mount} from 'enzyme';
 import GenreQuestionScreen from "./genre-question-screen.jsx";
 import {questions} from "../../__fixtures__/questions.js";
-import {makeAnswers} from "../../utils.js";
+
+const currentQuestion = questions.find((question) => question.type === `genre`);
 
 describe(`end to end test`, () => {
   it(`Callback func calls with correct data`, () => {
-    const clickHandler = jest.fn();
-    const currentQuestion = questions.find((question) => question.type === `genre`);
-    const app = shallow(
-        <GenreQuestionScreen
-          questions = {currentQuestion}
-          screenIndex = {0}
-          onAnswer = {clickHandler}
-        />
-    );
-    const form = app.find(`.game__tracks`);
-    const expectedValue = makeAnswers(currentQuestion.answers);
+    const asnwerHandler = jest.fn();
+    const renderPlayerHandler = jest.fn();
+    const changeHandler = jest.fn();
+    const resetAnswerHandler = jest.fn();
+    const resetPlayerHandler = jest.fn();
+    const userAnswerValue = [false, false, false, false];
+    const props = {
+      questions: currentQuestion,
+      screenIndex: 0,
+      onAnswer: asnwerHandler,
+      renderPlayer: renderPlayerHandler,
+      onChange: changeHandler,
+      resetUserAnswer: resetAnswerHandler,
+      userAnswer: userAnswerValue,
+      resetActivePlayerValue: resetPlayerHandler,
+    };
     const evt = {
       preventDefault: () => {}
     };
 
+    const app = mount(<GenreQuestionScreen {...props} />);
+    const form = app.find(`.game__tracks`);
+
     form.simulate(`submit`, evt);
-    expect(clickHandler).toHaveBeenCalledWith(expectedValue);
+    expect(asnwerHandler).toHaveBeenCalledWith(userAnswerValue);
+    expect(resetAnswerHandler).toHaveBeenCalled();
   });
 });

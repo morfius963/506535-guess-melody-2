@@ -1,1 +1,1 @@
-export const makeAnswers = (arr) => arr.map(() => false);
+export const makeAnswers = (count) => new Array(count).fill(false);

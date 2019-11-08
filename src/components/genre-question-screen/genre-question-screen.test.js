@@ -9,16 +9,21 @@ jest.mock(`../genre-answer/genre-answer.jsx`, () => jest.fn().mockReturnValue(nu
 describe(`snapshot test`, () => {
   it(`Component correctly renders`, () => {
     const currentQuestion = questions.find((question) => question.type === `genre`);
-    const clickHandler = jest.fn();
+    const props = {
+      questions: currentQuestion,
+      screenIndex: 0,
+      onAnswer: jest.fn(),
+      renderPlayer: jest.fn(),
+      onChange: jest.fn(),
+      resetUserAnswer: jest.fn(),
+      resetActivePlayerValue: jest.fn(),
+      userAnswer: [false, false, false, false],
+    };
+
     const tree = renderer
-      .create(
-          <GenreQuestionScreen
-            questions = {currentQuestion}
-            screenIndex = {0}
-            onAnswer = {clickHandler}
-          />
-      )
+      .create(<GenreQuestionScreen {...props} />)
       .toJSON();
+
     expect(GenreAnswer).toHaveBeenCalled();
     expect(tree).toMatchSnapshot();
   });

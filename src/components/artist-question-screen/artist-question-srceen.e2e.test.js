@@ -5,23 +5,27 @@ import {questions} from "../../__fixtures__/questions.js";
 
 describe(`end to end test`, () => {
   it(`Callback func calls with correct data`, () => {
-    const clickHandler = jest.fn();
+    const userAnswerHandler = jest.fn();
+    const renderPlayerHandler = jest.fn();
+    const resetPlayerHandler = jest.fn();
     const currentQuestion = questions.find((question) => question.type === `artist`);
     const evt = {
       target: {
         value: `John Snow`
       }
     };
-    const app = shallow(
-        <ArtistQuestionScreen
-          questions = {currentQuestion}
-          screenIndex = {0}
-          onAnswer = {clickHandler}
-        />
-    );
+    const props = {
+      questions: currentQuestion,
+      screenIndex: 0,
+      onAnswer: userAnswerHandler,
+      renderPlayer: renderPlayerHandler,
+      resetActivePlayerValue: resetPlayerHandler
+    };
+
+    const app = shallow(<ArtistQuestionScreen {...props} />);
     const form = app.find(`.game__artist`);
 
     form.simulate(`change`, evt);
-    expect(clickHandler).toHaveBeenCalledWith(`John Snow`);
+    expect(userAnswerHandler).toHaveBeenCalledWith(`John Snow`);
   });
 });

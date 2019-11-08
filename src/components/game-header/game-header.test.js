@@ -9,16 +9,19 @@ jest.mock(`../game-mistakes/game-mistakes.jsx`, () => jest.fn().mockReturnValue(
 
 describe(`snapshot test`, () => {
   it(`Component correctly renders`, () => {
-    const handler = jest.fn();
+    const props = {
+      gameTime: 5000,
+      onTimeEnd: jest.fn(),
+      onTimeUpdate: jest.fn(),
+      mistakes: 0,
+      registrateTimer: jest.fn()
+    };
+
+
     const tree = renderer
-      .create(<GameHeader
-        gameTime={5000}
-        onTimeEnd={handler}
-        onTimeUpdate={handler}
-        mistakes={0}
-        registrateTimer={jest.fn()}
-      />)
+      .create(<GameHeader {...props} />)
       .toJSON();
+
     expect(GameTime).toHaveBeenCalled();
     expect(GameMistakes).toHaveBeenCalled();
     expect(tree).toMatchSnapshot();

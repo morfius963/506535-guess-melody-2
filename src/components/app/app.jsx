@@ -8,6 +8,11 @@ import ArtistQuestionScreen from "../artist-question-screen/artist-question-scre
 import GenreQuestionScreen from "../genre-question-screen/genre-question-screen.jsx";
 import GameHeader from "../game-header/game-header.jsx";
 import propTypes from "./prop-types.js";
+import withActivePlayer from "../../hocs/with-active-player/with-active-player.jsx";
+import withUserAnswer from "../../hocs/with-user-answer/with-user-answer.jsx";
+
+const GenreQuestionScreenWrapped = withUserAnswer(withActivePlayer(GenreQuestionScreen));
+const ArtistQuestionScreenWrapped = withActivePlayer(ArtistQuestionScreen);
 
 class App extends PureComponent {
   render() {
@@ -41,7 +46,7 @@ class App extends PureComponent {
 
     switch (question.type) {
       case `genre`:
-        return <GenreQuestionScreen
+        return <GenreQuestionScreenWrapped
           questions = {question}
           screenIndex={questionStep}
           onAnswer = {(userAnswer) => onUserAnswer(
@@ -54,7 +59,7 @@ class App extends PureComponent {
           )}
         />;
       case `artist`:
-        return <ArtistQuestionScreen
+        return <ArtistQuestionScreenWrapped
           questions = {question}
           screenIndex={questionStep}
           onAnswer = {(userAnswer) => onUserAnswer(

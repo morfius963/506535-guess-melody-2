@@ -6,14 +6,14 @@ describe(`end to end test`, () => {
   it(`Tick method correctly decrements time`, () => {
     const timeUpdateHandler = jest.fn();
     const timeEndHandler = jest.fn();
-    const app = shallow(
-        <GameTime
-          time={300000}
-          onTimeEnd={timeEndHandler}
-          onTimeUpdate={timeUpdateHandler}
-          registrateTimer={jest.fn()}
-        />
-    );
+    const props = {
+      time: 300000,
+      onTimeEnd: timeEndHandler,
+      onTimeUpdate: timeUpdateHandler,
+      registrateTimer: jest.fn()
+    };
+
+    const app = shallow(<GameTime {...props} />);
 
     app.instance()._tick();
     expect(timeUpdateHandler).toHaveBeenCalledTimes(1);
