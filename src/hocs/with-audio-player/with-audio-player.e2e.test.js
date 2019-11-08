@@ -19,7 +19,7 @@ describe(`end to end test`, () => {
     const MockComponentWrapped = withAudioPlayer(mockComponent);
 
     // это для обработки ref
-    jest.spyOn(MockComponentWrapped.prototype, `_setRef`).mockImplementation(() => ref);
+    jest.spyOn(React, `createRef`).mockImplementation(() => ref);
 
     const audioPlayer = mount(<MockComponentWrapped {...props} />);
 

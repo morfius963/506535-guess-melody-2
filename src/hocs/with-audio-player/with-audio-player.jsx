@@ -6,7 +6,7 @@ const withAudioPlayer = (Component) => {
     constructor(props) {
       super(props);
 
-      this._audioRef = this._setRef();
+      this._audioRef = React.createRef();
 
       this.state = {
         isLoading: true,
@@ -50,10 +50,6 @@ const withAudioPlayer = (Component) => {
 
       audio.removeEventListener(`canplaythrough`, this._onAudioCanPlayThrough);
       audio.src = ``;
-    }
-
-    _setRef() {
-      return React.createRef();
     }
 
     _onPlayButtonClick(id) {
