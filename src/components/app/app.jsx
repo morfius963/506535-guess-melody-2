@@ -1,8 +1,8 @@
-import React, {PureComponent} from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import {connect} from "react-redux";
 
-import {ActionCreator} from "../../reducer/reducer.js";
+import ActionCreator from "../../store/actions/action-creator.js";
 import WelcomeScreen from "../welcome-screen/welcome-scren.jsx";
 import ArtistQuestionScreen from "../artist-question-screen/artist-question-screen.jsx";
 import GenreQuestionScreen from "../genre-question-screen/genre-question-screen.jsx";
@@ -14,7 +14,7 @@ import withUserAnswer from "../../hocs/with-user-answer/with-user-answer.jsx";
 const GenreQuestionScreenWrapped = withUserAnswer(withActivePlayer(GenreQuestionScreen));
 const ArtistQuestionScreenWrapped = withActivePlayer(ArtistQuestionScreen);
 
-class App extends PureComponent {
+class App extends React.PureComponent {
   render() {
     const {questions, questionStep, mistakes, time, onTimeUpdate, onTimeEnd, registrateTimer} = this.props;
     const currentQuestion = questions[questionStep];
@@ -30,11 +30,10 @@ class App extends PureComponent {
 
   _getScreen(question) {
     if (!question) {
-      const {time, maxMistakes, onWelcomeScreenClick} = this.props;
-      const timeInMin = time / 60 / 1000;
+      const {timeForGame, maxMistakes, onWelcomeScreenClick} = this.props;
 
       return <WelcomeScreen
-        gameTime = {timeInMin}
+        gameTime = {timeForGame}
         errorCount = {maxMistakes}
         onButtonClick = {onWelcomeScreenClick}
       />;
@@ -79,6 +78,7 @@ class App extends PureComponent {
 
 App.propTypes = {
   time: PropTypes.number.isRequired,
+  timeForGame: PropTypes.number.isRequired,
   questions: PropTypes.arrayOf(propTypes.question).isRequired,
   questionStep: PropTypes.number.isRequired,
   mistakes: PropTypes.number.isRequired,
@@ -90,25 +90,25 @@ App.propTypes = {
   registrateTimer: PropTypes.func.isRequired
 };
 
-const mapStateToProps = (state, ownProps) => Object.assign({}, ownProps, {
-  questionStep: state.questionStep,
-  mistakes: state.mistakes,
-  time: state.time
+const mapStateToProps = (state) => ({
+  questionStep: state.game.questionStep,
+  mistakes: state.game.mistakes,
+  time: state.game.time,
+  questions: state.appData.questions
 });
 
-const mapDispatchToProps = (dispatch) => ({
-  onWelcomeScreenClick: () => dispatch(ActionCreator.incrementStep()),
+const mapDispatchToProps = {
+  onWelcomeScreenClick: () => ActionCreator.incrementStep(),
 
-  onUserAnswer: (userAnswer, question, mistakes, maxMistakes, currentQuestionIndex, maxQuestionIndex) => {
-    dispatch(ActionCreator.incrementStep(currentQuestionIndex, maxQuestionIndex));
-    dispatch(ActionCreator.incrementMistake(userAnswer, question, mistakes, maxMistakes));
-  },
+  onUserAnswer: (userAnswer, question, mistakes, maxMistakes, currentQuestionIndex, maxQuestionIndex) => (
+    ActionCreator.incrementStep(userAnswer, question, mistakes, maxMistakes, currentQuestionIndex, maxQuestionIndex)
+  ),
 
-  onTimeUpdate: () => dispatch(ActionCreator.decrementTime()),
+  onTimeUpdate: () => ActionCreator.decrementTime(),
 
-  onTimeEnd: () => dispatch(ActionCreator.resetGame()),
+  onTimeEnd: () => ActionCreator.resetGame(),
 
-  registrateTimer: (id) => dispatch(ActionCreator.registrateTimer(id))
-});
+  registrateTimer: (id) => ActionCreator.registrateTimer(id)
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
