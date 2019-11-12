@@ -1,8 +1,8 @@
-import {reducer} from "./reducer.js";
+import game from "./game.js";
 
 describe(`Reducer test group`, () => {
   it(`Reducer correctly increments step`, () => {
-    expect(reducer(
+    expect(game(
         {
           questionStep: -1,
           mistakes: 0,
@@ -22,7 +22,7 @@ describe(`Reducer test group`, () => {
   });
 
   it(`Reducer correctly increments mistakes`, () => {
-    expect(reducer(
+    expect(game(
         {
           questionStep: 0,
           mistakes: 0,
@@ -34,7 +34,7 @@ describe(`Reducer test group`, () => {
           payload: 2
         }
     )).toEqual({
-      questionStep: 0,
+      questionStep: 2,
       mistakes: 2,
       time: 300000,
       gameTimer: null
@@ -42,7 +42,7 @@ describe(`Reducer test group`, () => {
   });
 
   it(`Reducer should correctly reset game`, () => {
-    expect(reducer(
+    expect(game(
         {
           questionStep: 1232,
           mistakes: 213,
@@ -61,7 +61,7 @@ describe(`Reducer test group`, () => {
   });
 
   it(`Reducer correctly works with incorrect data`, () => {
-    expect(reducer(
+    expect(game(
         undefined,
         {
           type: `etefdssf`
@@ -75,7 +75,7 @@ describe(`Reducer test group`, () => {
   });
 
   it(`Reducer correctly decrements time`, () => {
-    expect(reducer(
+    expect(game(
         {
           questionStep: -1,
           mistakes: 0,
