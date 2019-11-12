@@ -27,7 +27,7 @@ const AudioPlayer = (props) => {
         onClick={buttonClickhandler}
       />
       <div className="track__status">
-        <audio ref={audioRef} />
+        <audio ref={audioRef} loop />
       </div>
     </React.Fragment>
   );
