@@ -31,12 +31,15 @@ const withAudioPlayer = (Component) => {
       const audio = this._audioRef.current;
 
       audio.src = src;
-
       audio.addEventListener(`canplaythrough`, this._onAudioCanPlayThrough);
     }
 
     componentDidUpdate() {
       const audio = this._audioRef.current;
+
+      if (audio.src !== this.props.src) {
+        audio.src = this.props.src;
+      }
 
       if (this.props.isPlaying) {
         audio.play();

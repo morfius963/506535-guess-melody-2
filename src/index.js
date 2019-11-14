@@ -1,28 +1,48 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import {createStore} from "redux";
+import {createStore, applyMiddleware, combineReducers} from "redux";
 import {Provider} from "react-redux";
+import {compose} from "recompose";
+import thunk from 'redux-thunk';
 
 import App from "./components/app/app.jsx";
-import {settings, questions} from "./__fixtures__/questions.js";
-import {reducer} from "./reducer/reducer.js";
+import game from "./store/reducers/game/game.js";
+import appData from "./store/reducers/app-data/app-data.js";
+import createAPI from "./api.js";
+import Operation from "./store/actions/async-actions.js";
 
-const init = (gameQuestions) => {
-  const {errorCount} = settings;
+const settings = {
+  gameTime: 5,
+  errorCount: 3
+};
+
+const init = () => {
+  const {errorCount, gameTime} = settings;
+
+  const api = createAPI((...args) => store.dispatch(...args));
+  const reducer = combineReducers({
+    game,
+    appData
+  });
   const store = createStore(
       reducer,
-      window.__REDUX_DEVTOOLS_EXTENSION__ ? window.__REDUX_DEVTOOLS_EXTENSION__() : (f) => f
+      compose(
+          applyMiddleware(thunk.withExtraArgument(api)),
+          window.__REDUX_DEVTOOLS_EXTENSION__ ? window.__REDUX_DEVTOOLS_EXTENSION__() : (f) => f
+      )
   );
+
+  store.dispatch(Operation.loadQuestions());
 
   ReactDOM.render(
       <Provider store={store} >
         <App
-          maxMistakes = {errorCount}
-          questions = {gameQuestions}
+          timeForGame={gameTime}
+          maxMistakes={errorCount}
         />
       </Provider>,
       document.querySelector(`#root`)
   );
 };
 
-init(questions);
+init();
