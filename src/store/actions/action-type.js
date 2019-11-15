@@ -30,7 +30,10 @@ export default {
   loadQuestions: (questions) => {
     return {
       type: ActionType.LOAD_QUESTIONS,
-      payload: questions
+      payload: {
+        questions,
+        isLoading: false
+      }
     };
   },
 

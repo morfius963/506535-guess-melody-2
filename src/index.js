@@ -9,7 +9,6 @@ import App from "./components/app/app.jsx";
 import game from "./store/reducers/game/game.js";
 import appData from "./store/reducers/app-data/app-data.js";
 import createAPI from "./api.js";
-import Operation from "./store/actions/async-actions.js";
 
 const settings = {
   gameTime: 5,
@@ -31,8 +30,6 @@ const init = () => {
           window.__REDUX_DEVTOOLS_EXTENSION__ ? window.__REDUX_DEVTOOLS_EXTENSION__() : (f) => f
       )
   );
-
-  store.dispatch(Operation.loadQuestions());
 
   ReactDOM.render(
       <Provider store={store} >

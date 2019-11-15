@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import {connect} from "react-redux";
 
 import ActionCreator from "../../store/actions/action-creator.js";
+import Operation from "../../store/actions/async-actions";
 import WelcomeScreen from "../welcome-screen/welcome-scren.jsx";
 import ArtistQuestionScreen from "../artist-question-screen/artist-question-screen.jsx";
 import GenreQuestionScreen from "../genre-question-screen/genre-question-screen.jsx";
@@ -15,17 +16,27 @@ const GenreQuestionScreenWrapped = withUserAnswer(withActivePlayer(GenreQuestion
 const ArtistQuestionScreenWrapped = withActivePlayer(ArtistQuestionScreen);
 
 class App extends React.PureComponent {
+  constructor(props) {
+    super(props);
+
+    this.props.loadQuestions();
+  }
+
   render() {
-    const {questions, questionStep, mistakes, time, onTimeUpdate, onTimeEnd, registrateTimer} = this.props;
+    const {questions, questionStep, mistakes, time, onTimeUpdate, onTimeEnd, registrateTimer, isLoading} = this.props;
     const currentQuestion = questions[questionStep];
 
-    return <section className="game">
+    return (
+      isLoading
+        ? null
+        : <section className="game">
 
-      {currentQuestion && <GameHeader mistakes={mistakes} gameTime={time} registrateTimer={registrateTimer} onTimeUpdate={onTimeUpdate} onTimeEnd={onTimeEnd} />}
+          {currentQuestion && <GameHeader mistakes={mistakes} gameTime={time} registrateTimer={registrateTimer} onTimeUpdate={onTimeUpdate} onTimeEnd={onTimeEnd} />}
 
-      {this._getScreen(currentQuestion)}
+          {this._getScreen(currentQuestion)}
 
-    </section>;
+        </section>
+    );
   }
 
   _getScreen(question) {
@@ -87,17 +98,22 @@ App.propTypes = {
   onUserAnswer: PropTypes.func.isRequired,
   onTimeUpdate: PropTypes.func.isRequired,
   onTimeEnd: PropTypes.func.isRequired,
-  registrateTimer: PropTypes.func.isRequired
+  registrateTimer: PropTypes.func.isRequired,
+  loadQuestions: PropTypes.func.isRequired,
+  isLoading: PropTypes.bool.isRequired
 };
 
 const mapStateToProps = (state) => ({
   questionStep: state.game.questionStep,
   mistakes: state.game.mistakes,
   time: state.game.time,
-  questions: state.appData.questions
+  questions: state.appData.questions,
+  isLoading: state.appData.isLoading
 });
 
 const mapDispatchToProps = {
+  loadQuestions: () => Operation.loadQuestions(),
+
   onWelcomeScreenClick: () => ActionCreator.incrementStep(),
 
   onUserAnswer: (userAnswer, question, mistakes, maxMistakes, currentQuestionIndex, maxQuestionIndex) => (

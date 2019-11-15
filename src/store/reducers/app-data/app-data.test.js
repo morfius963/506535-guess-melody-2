@@ -18,10 +18,11 @@ describe(`load data test group`, () => {
         expect(dispatch).toHaveBeenCalledTimes(1);
         expect(dispatch).toHaveBeenNthCalledWith(1, {
           type: `LOAD_QUESTIONS`,
-          payload: [{lul: true}]
+          payload: {
+            questions: [{lul: true}],
+            isLoading: false
+          }
         });
       });
   });
-
-
 });
