@@ -5,6 +5,8 @@ class GameTime extends React.PureComponent {
   constructor(props) {
     super(props);
 
+    this._TIMER_BLINK_VALUE = 1000 * 30;
+
     props.registrateTimer(this._start());
   }
 
@@ -13,11 +15,13 @@ class GameTime extends React.PureComponent {
     const minutes = parseInt(time / 1000 / 60, 10);
     const seconds = parseInt(time / 1000 % 60, 10);
 
-    return <div className="timer__value" xmlns="http://www.w3.org/1999/xhtml">
-      <span className="timer__mins">{`${minutes}`.padStart(2, `0`)}</span>
-      <span className="timer__dots">:</span>
-      <span className="timer__secs">{`${seconds}`.padStart(2, `0`)}</span>
-    </div>;
+    return (
+      <div className={`timer__value ${time < this._TIMER_BLINK_VALUE ? `timer__value--finished` : ``}`} xmlns="http://www.w3.org/1999/xhtml">
+        <span className="timer__mins">{`${minutes}`.padStart(2, `0`)}</span>
+        <span className="timer__dots">:</span>
+        <span className="timer__secs">{`${seconds}`.padStart(2, `0`)}</span>
+      </div>
+    );
   }
 
   _start() {
