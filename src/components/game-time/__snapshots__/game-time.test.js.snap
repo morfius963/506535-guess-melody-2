@@ -2,7 +2,7 @@
 
 exports[`snapshot test Component correctly renders 1`] = `
 <div
-  className="timer__value"
+  className="timer__value timer__value--finished"
   xmlns="http://www.w3.org/1999/xhtml"
 >
   <span
