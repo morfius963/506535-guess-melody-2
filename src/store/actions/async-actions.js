@@ -6,6 +6,18 @@ const Operation = {
       .then((response) => {
         dispatch(ActionCreator.loadQuestions(response.data));
       });
+  },
+
+  postUserLogin: (userData) => (dispatch, state, api) => {
+    dispatch(ActionCreator.singUpUser(userData));
+
+    return api.post(`/login`, {
+      email: state().user.email,
+      password: state().user.password
+    })
+      .then(() => {
+        dispatch(ActionCreator.requireAuthorization());
+      });
   }
 };
 

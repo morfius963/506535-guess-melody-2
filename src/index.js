@@ -8,6 +8,7 @@ import thunk from 'redux-thunk';
 import App from "./components/app/app.jsx";
 import game from "./store/reducers/game/game.js";
 import appData from "./store/reducers/app-data/app-data.js";
+import user from "./store/reducers/user/user.js";
 import createAPI from "./api.js";
 
 const settings = {
@@ -21,7 +22,8 @@ const init = () => {
   const api = createAPI((...args) => store.dispatch(...args));
   const reducer = combineReducers({
     game,
-    appData
+    appData,
+    user
   });
   const store = createStore(
       reducer,
