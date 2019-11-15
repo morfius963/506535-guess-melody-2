@@ -16,20 +16,22 @@ const ArtistQuestionScreen = ({questions, onAnswer, screenIndex, renderPlayer, r
       [onAnswer, resetActivePlayerValue]
   );
 
-  return <section className="game__screen">
-    <h2 className="game__title">Кто исполняет эту песню?</h2>
-    <div className="game__track">
-      <div className="track">
+  return (
+    <section className="game__screen">
+      <h2 className="game__title">Кто исполняет эту песню?</h2>
+      <div className="game__track">
+        <div className="track">
 
-        {renderPlayer(song, 0)}
+          {renderPlayer(song, 0)}
 
+        </div>
       </div>
-    </div>
 
-    <form className="game__artist" onChange={formChangeHandler}>
-      {answers.map((answer, i) => <ArtistAnswer key={`${screenIndex}-${answer}-${i}`} answer={answer} id={i} />)}
-    </form>
-  </section>;
+      <form className="game__artist" onChange={formChangeHandler}>
+        {answers.map((answer, i) => <ArtistAnswer key={`${screenIndex}-${answer}-${i}`} answer={answer} id={i} />)}
+      </form>
+    </section>
+  );
 };
 
 ArtistQuestionScreen.propTypes = {

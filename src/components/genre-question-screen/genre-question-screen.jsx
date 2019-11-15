@@ -18,23 +18,25 @@ const GenreQuestionScreen = (props) => {
       [onAnswer, resetUserAnswer, resetActivePlayerValue]
   );
 
-  return <section className="game__screen">
-    <h2 className="game__title">Выберите {genre} треки</h2>
-    <form className="game__tracks" onSubmit={formSubmitHandler}>
-      {
-        answers.map((answer, i) =>
-          <GenreAnswer
-            key={`${screenIndex}-answer-${i}`}
-            answer={answer}
-            id={i}
-            checkboxChangeHandler={onChange}
-          >
-            {renderPlayer(answer, i)}
-          </GenreAnswer>)
-      }
-      <button className="game__submit button" type="submit">Ответить</button>
-    </form>
-  </section>;
+  return (
+    <section className="game__screen">
+      <h2 className="game__title">Выберите {genre} треки</h2>
+      <form className="game__tracks" onSubmit={formSubmitHandler}>
+        {
+          answers.map((answer, i) =>
+            <GenreAnswer
+              key={`${screenIndex}-answer-${i}`}
+              answer={answer}
+              id={i}
+              checkboxChangeHandler={onChange}
+            >
+              {renderPlayer(answer, i)}
+            </GenreAnswer>)
+        }
+        <button className="game__submit button" type="submit">Ответить</button>
+      </form>
+    </section>
+  );
 };
 
 GenreQuestionScreen.propTypes = {
