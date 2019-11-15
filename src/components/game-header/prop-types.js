@@ -5,5 +5,6 @@ export default {
   gameTime: PropTypes.number.isRequired,
   onTimeUpdate: PropTypes.func.isRequired,
   onTimeEnd: PropTypes.func.isRequired,
-  registrateTimer: PropTypes.func.isRequired
+  registrateTimer: PropTypes.func.isRequired,
+  resetGame: PropTypes.func.isRequired
 };
