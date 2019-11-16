@@ -9,7 +9,7 @@ const Operation = {
   },
 
   postUserLogin: (userData) => (dispatch, state, api) => {
-    dispatch(ActionCreator.singUpUser(userData));
+    dispatch(ActionCreator.singInUser(userData));
 
     return api.post(`/login`, {
       email: state().user.email,

@@ -21,7 +21,7 @@ describe(`Reducer test group`, () => {
 
   it(`Reducer should correctly change user data`, () => {
     expect(user(initialAppState, {
-      type: `SING_UP_USER`,
+      type: `SING_IN_USER`,
       payload: {
         email: `lol`,
         password: `123`

@@ -12,7 +12,7 @@ const user = (state = initialAppState, action) => {
       isAuthorizationRequired: action.payload
     });
 
-    case ActionType.SING_UP_USER: return Object.assign({}, state, {
+    case ActionType.SING_IN_USER: return Object.assign({}, state, {
       email: action.payload.email,
       password: action.payload.password
     });

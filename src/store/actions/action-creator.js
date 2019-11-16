@@ -52,8 +52,8 @@ const ActionCreator = {
     return Action.requireAuthorization;
   },
 
-  singUpUser: (userData) => {
-    return Action.singUpUser(userData);
+  singInUser: (userData) => {
+    return Action.singInUser(userData);
   },
 
   loadQuestions: Action.loadQuestions,

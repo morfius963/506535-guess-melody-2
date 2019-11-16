@@ -6,7 +6,7 @@ export const ActionType = {
   LOAD_QUESTIONS: `LOAD_QUESTIONS`,
   REGISTRATE_TIMER: `REGISTRATE_TIMER`,
   REQUIRE_AUTHORIZATION: `REQUIRE_AUTHORIZATION`,
-  SING_UP_USER: `SING_UP_USER`
+  SING_IN_USER: `SING_IN_USER`
 };
 
 export default {
@@ -34,11 +34,11 @@ export default {
     payload: true
   },
 
-  singUpUser: (userData) => {
+  singInUser: (userData) => {
     const {email, password} = userData;
 
     return {
-      type: ActionType.SING_UP_USER,
+      type: ActionType.SING_IN_USER,
       payload: {
         email,
         password
