@@ -14,7 +14,8 @@ describe(`snapshot test`, () => {
       onTimeEnd: jest.fn(),
       onTimeUpdate: jest.fn(),
       mistakes: 0,
-      registrateTimer: jest.fn()
+      registrateTimer: jest.fn(),
+      resetGame: jest.fn()
     };
 
 

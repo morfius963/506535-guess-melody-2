@@ -48,6 +48,14 @@ const ActionCreator = {
     return Action.reset;
   },
 
+  requireAuthorization: () => {
+    return Action.requireAuthorization;
+  },
+
+  singInUser: (userData) => {
+    return Action.singInUser(userData);
+  },
+
   loadQuestions: Action.loadQuestions,
 
   registrateTimer: Action.registerTimer

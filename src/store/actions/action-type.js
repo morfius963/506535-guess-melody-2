@@ -4,7 +4,9 @@ export const ActionType = {
   RESET: `RESET`,
   DECREMENT_TIME: `DECREMENT_TIME`,
   LOAD_QUESTIONS: `LOAD_QUESTIONS`,
-  REGISTRATE_TIMER: `REGISTRATE_TIMER`
+  REGISTRATE_TIMER: `REGISTRATE_TIMER`,
+  REQUIRE_AUTHORIZATION: `REQUIRE_AUTHORIZATION`,
+  SING_IN_USER: `SING_IN_USER`
 };
 
 export default {
@@ -27,10 +29,30 @@ export default {
     payload: 1000
   },
 
+  requireAuthorization: {
+    type: ActionType.REQUIRE_AUTHORIZATION,
+    payload: true
+  },
+
+  singInUser: (userData) => {
+    const {email, password} = userData;
+
+    return {
+      type: ActionType.SING_IN_USER,
+      payload: {
+        email,
+        password
+      }
+    };
+  },
+
   loadQuestions: (questions) => {
     return {
       type: ActionType.LOAD_QUESTIONS,
-      payload: questions
+      payload: {
+        questions,
+        isLoading: false
+      }
     };
   },
 

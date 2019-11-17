@@ -11,23 +11,18 @@ const initialAppState = {
 
 const game = (state = initialAppState, action) => {
   switch (action.type) {
-    case ActionType.INCREMENT_STEP: {
-      return Object.assign({}, state, {
-        questionStep: state.questionStep + action.payload
-      });
-    }
+    case ActionType.INCREMENT_STEP: return Object.assign({}, state, {
+      questionStep: state.questionStep + action.payload
+    });
 
-    case ActionType.INCREMENT_MISTAKES: {
-      return Object.assign({}, state, {
-        questionStep: state.questionStep + action.payload,
-        mistakes: state.mistakes + action.payload
-      });
-    }
+    case ActionType.INCREMENT_MISTAKES: return Object.assign({}, state, {
+      questionStep: state.questionStep + action.payload,
+      mistakes: state.mistakes + action.payload
+    });
 
-    case ActionType.DECREMENT_TIME:
-      return Object.assign({}, state, {
-        time: state.time - action.payload
-      });
+    case ActionType.DECREMENT_TIME: return Object.assign({}, state, {
+      time: state.time - action.payload
+    });
 
     case ActionType.REGISTRATE_TIMER: return Object.assign({}, state, {
       gameTimer: action.payload

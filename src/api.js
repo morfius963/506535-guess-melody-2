@@ -10,7 +10,6 @@ const createAPI = (dispatch) => {
 
   const onSuccess = (response) => response;
   const onFali = (err) => {
-    // requireAuthorization добавити
     if (err.response.status === 403) {
       dispatch(ActionCreator.requireAuthorization());
     }
