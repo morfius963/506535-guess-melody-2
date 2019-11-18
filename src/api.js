@@ -1,7 +1,9 @@
 import axios from "axios";
-import ActionCreator from "./store/actions/action-creator.js";
+import {createBrowserHistory} from "history";
 
-const createAPI = (dispatch) => {
+const history = createBrowserHistory();
+
+const createAPI = () => {
   const api = axios.create({
     baseURL: `https://htmlacademy-react-2.appspot.com/guess-melody`,
     timeout: 5000,
@@ -9,15 +11,15 @@ const createAPI = (dispatch) => {
   });
 
   const onSuccess = (response) => response;
-  const onFali = (err) => {
-    if (err.response.status === 403) {
-      dispatch(ActionCreator.requireAuthorization());
+  const onFail = (err) => {
+    if (err.response.status === 401) {
+      history.push(`/auth`);
     }
 
     return err;
   };
 
-  api.interceptors.response.use(onSuccess, onFali);
+  api.interceptors.response.use(onSuccess, onFail);
 
   return api;
 };
