@@ -1,14 +1,17 @@
 import game from "./game.js";
 
 describe(`Reducer test group`, () => {
+  const initialState = {
+    questionStep: -1,
+    mistakes: 0,
+    time: 300000,
+    gameTimer: null,
+    gameResult: ``
+  };
+
   it(`Reducer correctly increments step`, () => {
     expect(game(
-        {
-          questionStep: -1,
-          mistakes: 0,
-          time: 300000,
-          gameTimer: null
-        },
+        initialState,
         {
           type: `INCREMENT_STEP`,
           payload: 1
@@ -17,38 +20,30 @@ describe(`Reducer test group`, () => {
       questionStep: 0,
       mistakes: 0,
       time: 300000,
-      gameTimer: null
+      gameTimer: null,
+      gameResult: ``
     });
   });
 
   it(`Reducer correctly increments mistakes`, () => {
     expect(game(
-        {
-          questionStep: 0,
-          mistakes: 0,
-          time: 300000,
-          gameTimer: null
-        },
+        initialState,
         {
           type: `INCREMENT_MISTAKES`,
-          payload: 2
+          payload: 1
         }
     )).toEqual({
-      questionStep: 2,
-      mistakes: 2,
+      questionStep: 0,
+      mistakes: 1,
       time: 300000,
-      gameTimer: null
+      gameTimer: null,
+      gameResult: ``
     });
   });
 
   it(`Reducer should correctly reset game`, () => {
     expect(game(
-        {
-          questionStep: 1232,
-          mistakes: 213,
-          time: 300000,
-          gameTimer: null
-        },
+        initialState,
         {
           type: `RESET`
         }
@@ -56,7 +51,8 @@ describe(`Reducer test group`, () => {
       questionStep: -1,
       mistakes: 0,
       time: 300000,
-      gameTimer: null
+      gameTimer: null,
+      gameResult: ``
     });
   });
 
@@ -66,22 +62,30 @@ describe(`Reducer test group`, () => {
         {
           type: `etefdssf`
         }
+    )).toEqual(initialState);
+  });
+
+  it(`Reducer should correctly decrements time`, () => {
+    expect(game(
+        initialState,
+        {
+          type: `RESTART_GAME`,
+          payload: {
+            questionStep: 0
+          }
+        }
     )).toEqual({
-      questionStep: -1,
+      questionStep: 0,
       mistakes: 0,
       time: 300000,
-      gameTimer: null
+      gameTimer: null,
+      gameResult: ``
     });
   });
 
-  it(`Reducer correctly decrements time`, () => {
+  it(`Reducer should correctly start new game`, () => {
     expect(game(
-        {
-          questionStep: -1,
-          mistakes: 0,
-          time: 300000,
-          gameTimer: null
-        },
+        initialState,
         {
           type: `DECREMENT_TIME`,
           payload: 1000
@@ -90,7 +94,30 @@ describe(`Reducer test group`, () => {
       questionStep: -1,
       mistakes: 0,
       time: 299000,
-      gameTimer: null
+      gameTimer: null,
+      gameResult: ``
+    });
+  });
+
+  it(`Reducer should correctly change state when time ends`, () => {
+    expect(game(
+        {
+          questionStep: 5,
+          mistakes: 2,
+          time: 125000,
+          gameTimer: 3,
+          gameResult: ``
+        },
+        {
+          type: `RESULT_LOSE_TIME`,
+          payload: `lose-time`
+        }
+    )).toEqual({
+      questionStep: -1,
+      mistakes: 2,
+      time: 125000,
+      gameTimer: 3,
+      gameResult: `lose-time`
     });
   });
 });
