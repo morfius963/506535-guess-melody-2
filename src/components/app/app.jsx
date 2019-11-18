@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import {connect} from "react-redux";
+import {Switch, Route, Redirect} from "react-router-dom";
 
 import ActionCreator from "../../store/actions/action-creator.js";
 import Operation from "../../store/actions/async-actions";
@@ -9,10 +10,13 @@ import ArtistQuestionScreen from "../artist-question-screen/artist-question-scre
 import GenreQuestionScreen from "../genre-question-screen/genre-question-screen.jsx";
 import GameHeader from "../game-header/game-header.jsx";
 import AuthorizationScreen from "../authorization-screen/authorization-screen.jsx";
+import GameResultLose from "../game-result-lose/game-result-lose.jsx";
+import GameResultSuccess from "../game-result-success/game-result-success.jsx";
 import propTypes from "./prop-types.js";
 import withActivePlayer from "../../hocs/with-active-player/with-active-player.jsx";
 import withUserAnswer from "../../hocs/with-user-answer/with-user-answer.jsx";
 import withAuthorizationScreen from "../../hocs/with-authorization-screen/with-authorization-screen.jsx";
+import PrivateRoute from "../../hocs/with-private-route/with-private-route.jsx";
 
 const GenreQuestionScreenWrapped = withUserAnswer(withActivePlayer(GenreQuestionScreen));
 const ArtistQuestionScreenWrapped = withActivePlayer(ArtistQuestionScreen);
@@ -26,7 +30,46 @@ class App extends React.PureComponent {
   }
 
   render() {
-    const {questions, questionStep, mistakes, time, onTimeUpdate, onTimeEnd, registrateTimer, isLoading, isAuthorizationRequired, resetGame} = this.props;
+    const {isAuthorizationRequired, postUserLogin, time, mistakes, gameResult, restartGame} = this.props;
+
+    return (
+      <Switch>
+        <Route
+          path="/"
+          exact
+          render={() => this._renderMainPage()}
+        />
+        <Route
+          path="/auth"
+          exact
+          render={(props) => <AuthorizationScreenWrapped onSubmit={postUserLogin} {...props} />}
+        />
+        <Route
+          path="/lose"
+          exact
+          render={() => <GameResultLose result={gameResult} restartGame={restartGame} />}
+        />
+        <PrivateRoute
+          path="/win"
+          exact
+          renderCmp={() => <GameResultSuccess time={time} mistakes={mistakes} restartGame={restartGame} />}
+          isAuthorizationRequired={isAuthorizationRequired}
+        />
+
+        <Route
+          render={() => (
+            <section className="modal">
+              <h2 className="modal__title">Произошла ошибка!</h2>
+              <p className="modal__text">Статус: 404. Страница не найдена.</p>
+            </section>
+          )}
+        />
+      </Switch>
+    );
+  }
+
+  _renderMainPage() {
+    const {questions, questionStep, mistakes, time, onTimeUpdate, onTimeEnd, registrateTimer, isLoading, resetGame} = this.props;
     const currentQuestion = questions[questionStep];
 
     return (
@@ -34,7 +77,7 @@ class App extends React.PureComponent {
         ? null
         : <section className="game">
 
-          {currentQuestion && isAuthorizationRequired && <GameHeader
+          {currentQuestion && <GameHeader
             mistakes={mistakes}
             gameTime={time}
             registrateTimer={registrateTimer}
@@ -50,9 +93,20 @@ class App extends React.PureComponent {
   }
 
   _getScreen(question) {
-    if (!question) {
-      const {timeForGame, maxMistakes, onWelcomeScreenClick} = this.props;
+    const {onUserAnswer, mistakes, maxMistakes, questions, questionStep, timeForGame, onWelcomeScreenClick, gameResult} = this.props;
+    const currentQuestionIndex = questions.indexOf(question);
+    const maxQuestionIndex = questions.length;
 
+    if (gameResult) {
+      const [result] = gameResult.split(`-`);
+      return (
+        <Redirect to={{
+          pathname: `/${result}`
+        }} />
+      );
+    }
+
+    if (!question) {
       return <WelcomeScreen
         gameTime = {timeForGame}
         errorCount = {maxMistakes}
@@ -60,17 +114,14 @@ class App extends React.PureComponent {
       />;
     }
 
-    const {onUserAnswer, mistakes, maxMistakes, questions, questionStep, isAuthorizationRequired, requireAuthorization} = this.props;
-    const currentQuestionIndex = questions.indexOf(question);
-    const maxQuestionIndex = questions.length;
-
-    if (!isAuthorizationRequired) {
-      return (
-        <AuthorizationScreenWrapped
-          onSubmit={requireAuthorization}
-        />
-      );
-    }
+    const userAnswerHandler = (userAnswer) => onUserAnswer(
+        userAnswer,
+        question,
+        mistakes,
+        maxMistakes,
+        currentQuestionIndex,
+        maxQuestionIndex
+    );
 
     switch (question.type) {
       case `genre`:
@@ -78,14 +129,7 @@ class App extends React.PureComponent {
           <GenreQuestionScreenWrapped
             questions = {question}
             screenIndex={questionStep}
-            onAnswer = {(userAnswer) => onUserAnswer(
-                userAnswer,
-                question,
-                mistakes,
-                maxMistakes,
-                currentQuestionIndex,
-                maxQuestionIndex
-            )}
+            onAnswer = {userAnswerHandler}
           />
         );
       case `artist`:
@@ -93,14 +137,7 @@ class App extends React.PureComponent {
           <ArtistQuestionScreenWrapped
             questions = {question}
             screenIndex={questionStep}
-            onAnswer = {(userAnswer) => onUserAnswer(
-                userAnswer,
-                question,
-                mistakes,
-                maxMistakes,
-                currentQuestionIndex,
-                maxQuestionIndex
-            )}
+            onAnswer = {userAnswerHandler}
           />
         );
     }
@@ -124,37 +161,42 @@ App.propTypes = {
   loadQuestions: PropTypes.func.isRequired,
   isLoading: PropTypes.bool.isRequired,
   isAuthorizationRequired: PropTypes.bool.isRequired,
-  requireAuthorization: PropTypes.func.isRequired,
-  resetGame: PropTypes.func.isRequired
+  postUserLogin: PropTypes.func.isRequired,
+  resetGame: PropTypes.func.isRequired,
+  restartGame: PropTypes.func.isRequired,
+  gameResult: PropTypes.oneOf([``, `win`, `lose-time`, `lose-mistakes`])
 };
 
 const mapStateToProps = (state) => ({
   questionStep: state.game.questionStep,
   mistakes: state.game.mistakes,
   time: state.game.time,
+  gameResult: state.game.gameResult,
   questions: state.appData.questions,
   isLoading: state.appData.isLoading,
   isAuthorizationRequired: state.user.isAuthorizationRequired
 });
 
 const mapDispatchToProps = {
-  loadQuestions: () => Operation.loadQuestions(),
+  loadQuestions: Operation.loadQuestions,
 
-  onWelcomeScreenClick: () => ActionCreator.incrementStep(),
+  onWelcomeScreenClick: ActionCreator.incrementStep,
+
+  onTimeUpdate: ActionCreator.decrementTime,
+
+  onTimeEnd: ActionCreator.resultLoseTime,
+
+  resetGame: ActionCreator.resetGame,
+
+  restartGame: ActionCreator.restartGame,
 
   onUserAnswer: (userAnswer, question, mistakes, maxMistakes, currentQuestionIndex, maxQuestionIndex) => (
     ActionCreator.incrementStep(userAnswer, question, mistakes, maxMistakes, currentQuestionIndex, maxQuestionIndex)
   ),
 
-  onTimeUpdate: () => ActionCreator.decrementTime(),
-
-  onTimeEnd: () => ActionCreator.resetGame(),
-
   registrateTimer: (id) => ActionCreator.registrateTimer(id),
 
-  requireAuthorization: (userData) => Operation.postUserLogin(userData),
-
-  resetGame: () => ActionCreator.resetGame()
+  postUserLogin: (userData, pushPath) => Operation.postUserLogin(userData, pushPath)
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
