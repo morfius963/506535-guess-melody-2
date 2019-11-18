@@ -15,7 +15,7 @@ const ActionCreator = {
     let answerIsCorrect = false;
 
     if (currentQuestionIndex + 1 >= maxQuestionIndex) {
-      return Action.reset;
+      return Action.resultWin;
     }
 
     switch (question.type) {
@@ -30,7 +30,7 @@ const ActionCreator = {
     }
 
     if (!answerIsCorrect && mistakes + 1 >= maxMistakes) {
-      return Action.reset;
+      return Action.resultLoseMistakes;
     }
 
     if (!answerIsCorrect) {
@@ -48,17 +48,21 @@ const ActionCreator = {
     return Action.reset;
   },
 
-  requireAuthorization: () => {
-    return Action.requireAuthorization;
+  restartGame: () => {
+    return Action.restartGame;
   },
 
-  singInUser: (userData) => {
-    return Action.singInUser(userData);
+  resultLoseTime: () => {
+    return Action.resultLoseTime;
   },
 
   loadQuestions: Action.loadQuestions,
 
-  registrateTimer: Action.registerTimer
+  registrateTimer: Action.registerTimer,
+
+  singInUser: (userData) => {
+    return Action.singInUser(userData);
+  },
 };
 
 export default ActionCreator;
