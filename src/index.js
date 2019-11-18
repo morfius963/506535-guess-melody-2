@@ -4,6 +4,7 @@ import {createStore, applyMiddleware, combineReducers} from "redux";
 import {Provider} from "react-redux";
 import {compose} from "recompose";
 import thunk from 'redux-thunk';
+import {BrowserRouter} from "react-router-dom";
 
 import App from "./components/app/app.jsx";
 import game from "./store/reducers/game/game.js";
@@ -19,7 +20,7 @@ const settings = {
 const init = () => {
   const {errorCount, gameTime} = settings;
 
-  const api = createAPI((...args) => store.dispatch(...args));
+  const api = createAPI();
   const reducer = combineReducers({
     game,
     appData,
@@ -35,10 +36,12 @@ const init = () => {
 
   ReactDOM.render(
       <Provider store={store} >
-        <App
-          timeForGame={gameTime}
-          maxMistakes={errorCount}
-        />
+        <BrowserRouter>
+          <App
+            timeForGame={gameTime}
+            maxMistakes={errorCount}
+          />
+        </BrowserRouter>
       </Provider>,
       document.querySelector(`#root`)
   );

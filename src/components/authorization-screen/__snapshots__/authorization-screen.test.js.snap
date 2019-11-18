@@ -44,7 +44,7 @@ exports[`snapshot test Component correctly renders 1`] = `
         name="email"
         onChange={[MockFunction]}
         required={true}
-        type="text"
+        type="email"
       />
     </p>
     <p

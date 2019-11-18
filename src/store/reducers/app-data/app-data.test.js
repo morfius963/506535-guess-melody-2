@@ -5,7 +5,7 @@ import MockAdapter from "axios-mock-adapter";
 describe(`load data test group`, () => {
   it(`Should make a correct call to /questions`, () => {
     const dispatch = jest.fn();
-    const api = createAPI(dispatch);
+    const api = createAPI();
     const apiMock = new MockAdapter(api);
     const questionLoader = Operation.loadQuestions();
 

@@ -6,7 +6,11 @@ export const ActionType = {
   LOAD_QUESTIONS: `LOAD_QUESTIONS`,
   REGISTRATE_TIMER: `REGISTRATE_TIMER`,
   REQUIRE_AUTHORIZATION: `REQUIRE_AUTHORIZATION`,
-  SING_IN_USER: `SING_IN_USER`
+  SING_IN_USER: `SING_IN_USER`,
+  RESULT_WIN: `RESULT_WIN`,
+  RESULT_LOSE_TIME: `RESULT_LOSE_TIME`,
+  RESULT_LOSE_MISTAKES: `RESULT_LOSE_MISTAKES`,
+  RESTART_GAME: `RESTART_GAME`
 };
 
 export default {
@@ -29,19 +33,36 @@ export default {
     payload: 1000
   },
 
-  requireAuthorization: {
-    type: ActionType.REQUIRE_AUTHORIZATION,
-    payload: true
+  resultWin: {
+    type: ActionType.RESULT_WIN,
+    payload: `win`
   },
 
-  singInUser: (userData) => {
-    const {email, password} = userData;
+  resultLoseTime: {
+    type: ActionType.RESULT_LOSE_TIME,
+    payload: `lose-time`
+  },
+
+  resultLoseMistakes: {
+    type: ActionType.RESULT_LOSE_MISTAKES,
+    payload: `lose-mistakes`
+  },
+
+  restartGame: {
+    type: ActionType.RESTART_GAME,
+    payload: {
+      questionStep: 0
+    }
+  },
+
+  singInUser: (userData = {}) => {
+    const {email} = userData;
 
     return {
       type: ActionType.SING_IN_USER,
       payload: {
         email,
-        password
+        requireAuthorization: false
       }
     };
   },

@@ -6,7 +6,8 @@ const initialAppState = {
   questionStep: -1,
   mistakes: 0,
   time: GAME_TIME_MINUTES * 60 * 1000,
-  gameTimer: null
+  gameTimer: null,
+  gameResult: ``
 };
 
 const game = (state = initialAppState, action) => {
@@ -27,6 +28,19 @@ const game = (state = initialAppState, action) => {
     case ActionType.REGISTRATE_TIMER: return Object.assign({}, state, {
       gameTimer: action.payload
     });
+
+    case ActionType.RESTART_GAME: return Object.assign({}, initialAppState, {
+      questionStep: action.payload.questionStep
+    });
+
+    case ActionType.RESULT_WIN:
+    case ActionType.RESULT_LOSE_TIME:
+    case ActionType.RESULT_LOSE_MISTAKES:
+      clearInterval(state.gameTimer);
+      return Object.assign({}, state, {
+        questionStep: -1,
+        gameResult: action.payload
+      });
 
     case ActionType.RESET:
       clearInterval(state.gameTimer);

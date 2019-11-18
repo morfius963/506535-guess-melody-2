@@ -8,15 +8,11 @@ const Operation = {
       });
   },
 
-  postUserLogin: (userData) => (dispatch, state, api) => {
-    dispatch(ActionCreator.singInUser(userData));
-
-    return api.post(`/login`, {
-      email: state().user.email,
-      password: state().user.password
-    })
-      .then(() => {
-        dispatch(ActionCreator.requireAuthorization());
+  postUserLogin: (userData, pushPath) => (dispatch, _, api) => {
+    return api.post(`/login`, userData)
+      .then((response) => {
+        dispatch(ActionCreator.singInUser(response.data));
+        pushPath();
       });
   }
 };

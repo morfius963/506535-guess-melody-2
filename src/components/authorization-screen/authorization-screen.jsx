@@ -10,7 +10,7 @@ const AuthorizationScreen = ({formSubmitHandler, userInputHandler}) => {
       <form className="login__form" action="" onSubmit={formSubmitHandler}>
         <p className="login__field">
           <label className="login__label" htmlFor="email">Логин</label>
-          <input className="login__input" type="text" name="email" id="email" onChange={userInputHandler} required/>
+          <input className="login__input" type="email" name="email" id="email" onChange={userInputHandler} required/>
         </p>
         <p className="login__field">
           <label className="login__label" htmlFor="password">Пароль</label>
