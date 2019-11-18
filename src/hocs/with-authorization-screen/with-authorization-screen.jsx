@@ -33,18 +33,25 @@ const withAuthorizationScreen = (Component) => {
     }
 
     _formSubmitHandler(evt) {
-      const {onSubmit} = this.props;
+      const {onSubmit, history} = this.props;
+      const pushPath = () => {
+        history.push(`/win`);
+      };
 
       evt.preventDefault();
-      onSubmit({
-        email: this.state.email,
-        password: this.state.password
-      });
+      onSubmit(
+          {
+            email: this.state.email,
+            password: this.state.password
+          },
+          pushPath
+      );
     }
   }
 
   WithAuthorizationScreen.propTypes = {
-    onSubmit: PropTypes.func.isRequired
+    onSubmit: PropTypes.func.isRequired,
+    history: PropTypes.object
   };
 
   return WithAuthorizationScreen;
