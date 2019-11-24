@@ -30,7 +30,7 @@ class App extends React.PureComponent {
   }
 
   render() {
-    const {isAuthorizationRequired, postUserLogin, time, mistakes, gameResult, restartGame} = this.props;
+    const {isAuthorizationRequired, postUserLogin, time, mistakes, gameResult, restartGame, points, quickAnswerCount} = this.props;
 
     return (
       <Switch>
@@ -52,7 +52,7 @@ class App extends React.PureComponent {
         <PrivateRoute
           path="/win"
           exact
-          renderCmp={() => <GameResultSuccess time={time} mistakes={mistakes} restartGame={restartGame} />}
+          renderCmp={() => <GameResultSuccess time={time} mistakes={mistakes} restartGame={restartGame} points={points} quickAnswerCount={quickAnswerCount} />}
           isAuthorizationRequired={isAuthorizationRequired}
         />
 
@@ -79,7 +79,7 @@ class App extends React.PureComponent {
 
           {currentQuestion && <GameHeader
             mistakes={mistakes}
-            gameTime={time}
+            time={time}
             registrateTimer={registrateTimer}
             onTimeUpdate={onTimeUpdate}
             onTimeEnd={onTimeEnd}
@@ -114,13 +114,14 @@ class App extends React.PureComponent {
       />;
     }
 
-    const userAnswerHandler = (userAnswer) => onUserAnswer(
+    const userAnswerHandler = (userAnswer, answerTime) => onUserAnswer(
         userAnswer,
         question,
         mistakes,
         maxMistakes,
         currentQuestionIndex,
-        maxQuestionIndex
+        maxQuestionIndex,
+        answerTime
     );
 
     switch (question.type) {
@@ -153,18 +154,21 @@ App.propTypes = {
   questionStep: PropTypes.number.isRequired,
   mistakes: PropTypes.number.isRequired,
   maxMistakes: PropTypes.number.isRequired,
+  points: PropTypes.number.isRequired,
+  quickAnswerCount: PropTypes.number.isRequired,
+  isLoading: PropTypes.bool.isRequired,
+  isAuthorizationRequired: PropTypes.bool.isRequired,
+  gameResult: PropTypes.oneOf([``, `win`, `lose-time`, `lose-mistakes`]),
+
   onWelcomeScreenClick: PropTypes.func.isRequired,
   onUserAnswer: PropTypes.func.isRequired,
   onTimeUpdate: PropTypes.func.isRequired,
   onTimeEnd: PropTypes.func.isRequired,
   registrateTimer: PropTypes.func.isRequired,
   loadQuestions: PropTypes.func.isRequired,
-  isLoading: PropTypes.bool.isRequired,
-  isAuthorizationRequired: PropTypes.bool.isRequired,
   postUserLogin: PropTypes.func.isRequired,
   resetGame: PropTypes.func.isRequired,
-  restartGame: PropTypes.func.isRequired,
-  gameResult: PropTypes.oneOf([``, `win`, `lose-time`, `lose-mistakes`])
+  restartGame: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => ({
@@ -172,8 +176,12 @@ const mapStateToProps = (state) => ({
   mistakes: state.game.mistakes,
   time: state.game.time,
   gameResult: state.game.gameResult,
+  points: state.game.points,
+  quickAnswerCount: state.game.quickAnswerCount,
+
   questions: state.appData.questions,
   isLoading: state.appData.isLoading,
+
   isAuthorizationRequired: state.user.isAuthorizationRequired
 });
 
@@ -190,8 +198,8 @@ const mapDispatchToProps = {
 
   restartGame: ActionCreator.restartGame,
 
-  onUserAnswer: (userAnswer, question, mistakes, maxMistakes, currentQuestionIndex, maxQuestionIndex) => (
-    ActionCreator.incrementStep(userAnswer, question, mistakes, maxMistakes, currentQuestionIndex, maxQuestionIndex)
+  onUserAnswer: (userAnswer, question, mistakes, maxMistakes, currentQuestionIndex, maxQuestionIndex, answerTime) => (
+    ActionCreator.incrementStep(userAnswer, question, mistakes, maxMistakes, currentQuestionIndex, maxQuestionIndex, answerTime)
   ),
 
   registrateTimer: (id) => ActionCreator.registrateTimer(id),
