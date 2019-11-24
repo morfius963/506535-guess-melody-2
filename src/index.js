@@ -1,10 +1,11 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import thunk from 'redux-thunk';
 import {createStore, applyMiddleware, combineReducers} from "redux";
 import {Provider} from "react-redux";
 import {compose} from "recompose";
-import thunk from 'redux-thunk';
-import {BrowserRouter} from "react-router-dom";
+import {Router} from "react-router-dom";
+import {createBrowserHistory} from "history";
 
 import App from "./components/app/app.jsx";
 import game from "./store/reducers/game/game.js";
@@ -17,10 +18,12 @@ const settings = {
   errorCount: 3
 };
 
+const history = createBrowserHistory();
+
 const init = () => {
   const {errorCount, gameTime} = settings;
 
-  const api = createAPI();
+  const api = createAPI(() => history.push(`/login`));
   const reducer = combineReducers({
     game,
     appData,
@@ -36,12 +39,12 @@ const init = () => {
 
   ReactDOM.render(
       <Provider store={store} >
-        <BrowserRouter>
+        <Router history={history}>
           <App
             timeForGame={gameTime}
             maxMistakes={errorCount}
           />
-        </BrowserRouter>
+        </Router>
       </Provider>,
       document.querySelector(`#root`)
   );
