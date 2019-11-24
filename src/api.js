@@ -1,9 +1,6 @@
 import axios from "axios";
-import {createBrowserHistory} from "history";
 
-const history = createBrowserHistory();
-
-const createAPI = () => {
+const createAPI = (onLoginFail) => {
   const api = axios.create({
     baseURL: `https://htmlacademy-react-2.appspot.com/guess-melody`,
     timeout: 5000,
@@ -13,10 +10,12 @@ const createAPI = () => {
   const onSuccess = (response) => response;
   const onFail = (err) => {
     if (err.response.status === 401) {
-      history.push(`/auth`);
+      onLoginFail();
+
+      return;
     }
 
-    return err;
+    throw err;
   };
 
   api.interceptors.response.use(onSuccess, onFail);
