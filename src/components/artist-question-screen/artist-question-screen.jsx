@@ -1,38 +1,60 @@
-import React, {useCallback} from "react";
+import React from "react";
 import PropTypes from "prop-types";
 
 import propTypes from "./prop-types.js";
 import ArtistAnswer from "../artist-answer/artist-answer.jsx";
 
-const ArtistQuestionScreen = ({questions, onAnswer, screenIndex, renderPlayer, resetActivePlayerValue}) => {
-  const {answers, song} = questions;
+class ArtistQuestionScreen extends React.PureComponent {
+  constructor(props) {
+    super(props);
 
-  const formChangeHandler = useCallback(
-      (evt) => {
-        const asnwerValue = evt.target.value;
-        onAnswer(asnwerValue);
-        resetActivePlayerValue();
-      },
-      [onAnswer, resetActivePlayerValue]
-  );
+    this._startTime = null;
 
-  return (
-    <section className="game__screen">
-      <h2 className="game__title">Кто исполняет эту песню?</h2>
-      <div className="game__track">
-        <div className="track">
+    this._formSubmitHandler = this._formSubmitHandler.bind(this);
+  }
 
-          {renderPlayer(song, 0)}
+  componentDidUpdate() {
+    if (this._startTime !== null) {
+      return;
+    }
 
+    this._startTime = performance.now();
+  }
+
+  render() {
+    const {questions, screenIndex, renderPlayer} = this.props;
+    const {answers, song} = questions;
+
+    return (
+      <section className="game__screen">
+        <h2 className="game__title">Кто исполняет эту песню?</h2>
+        <div className="game__track">
+          <div className="track">
+
+            {renderPlayer(song, 0)}
+
+          </div>
         </div>
-      </div>
 
-      <form className="game__artist" onChange={formChangeHandler}>
-        {answers.map((answer, i) => <ArtistAnswer key={`${screenIndex}-${answer}-${i}`} answer={answer} id={i} />)}
-      </form>
-    </section>
-  );
-};
+        <form className="game__artist" onChange={this._formSubmitHandler}>
+          {
+            answers.map((answer, i) => <ArtistAnswer key={`${screenIndex}-${answer}-${i}`} answer={answer} id={i} />)
+          }
+        </form>
+      </section>
+    );
+  }
+
+  _formSubmitHandler(evt) {
+    const {onAnswer, resetActivePlayerValue} = this.props;
+    const asnwerValue = evt.target.value;
+    const answerTime = performance.now() - this._startTime;
+
+    onAnswer(asnwerValue, answerTime);
+    resetActivePlayerValue();
+    this._startTime = null;
+  }
+}
 
 ArtistQuestionScreen.propTypes = {
   questions: propTypes.questions,
