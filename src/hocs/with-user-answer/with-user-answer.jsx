@@ -12,15 +12,15 @@ const withUserAnswer = (Component) => {
         userAnswer: makeAnswers(this._ANSWERS_COUNT)
       };
 
-      this._bindedCheckboxChangeHandler = this._checkboxChangeHandler.bind(this);
-      this._bindedSetDefaultStateValue = this._setDefaultStateValue.bind(this);
+      this._checkboxChangeHandler = this._checkboxChangeHandler.bind(this);
+      this._setDefaultStateValue = this._setDefaultStateValue.bind(this);
     }
 
     render() {
       return <Component
         {...this.props}
-        onChange={this._bindedCheckboxChangeHandler}
-        resetUserAnswer={this._bindedSetDefaultStateValue}
+        onChange={this._checkboxChangeHandler}
+        resetUserAnswer={this._setDefaultStateValue}
         userAnswer={this.state.userAnswer}
       />;
     }
