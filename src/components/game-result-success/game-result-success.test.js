@@ -3,10 +3,9 @@ import renderer from "react-test-renderer";
 import GameResultSuccess from "./game-result-success.jsx";
 
 jest.mock(`react-router-dom`, () => ({
-  useHistory: () => ({
-    push: jest.fn(),
-  }),
+  Link: () => null
 }));
+
 
 describe(`snapshot test`, () => {
   it(`Component correctly renders`, () => {

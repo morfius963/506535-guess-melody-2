@@ -6,7 +6,9 @@ describe(`Reducer test group`, () => {
     mistakes: 0,
     time: 300000,
     gameTimer: null,
-    gameResult: ``
+    gameResult: ``,
+    points: 0,
+    quickAnswerCount: 0,
   };
 
   it(`Reducer correctly increments step`, () => {
@@ -14,14 +16,20 @@ describe(`Reducer test group`, () => {
         initialState,
         {
           type: `INCREMENT_STEP`,
-          payload: 1
+          payload: {
+            step: 1,
+            points: 2,
+            quickAnswerCount: 1
+          }
         }
     )).toEqual({
       questionStep: 0,
       mistakes: 0,
       time: 300000,
       gameTimer: null,
-      gameResult: ``
+      gameResult: ``,
+      points: 2,
+      quickAnswerCount: 1,
     });
   });
 
@@ -30,14 +38,20 @@ describe(`Reducer test group`, () => {
         initialState,
         {
           type: `INCREMENT_MISTAKES`,
-          payload: 1
+          payload: {
+            step: 1,
+            mistakes: 1,
+            points: -2
+          }
         }
     )).toEqual({
       questionStep: 0,
       mistakes: 1,
       time: 300000,
       gameTimer: null,
-      gameResult: ``
+      gameResult: ``,
+      points: 0,
+      quickAnswerCount: 0,
     });
   });
 
@@ -47,13 +61,7 @@ describe(`Reducer test group`, () => {
         {
           type: `RESET`
         }
-    )).toEqual({
-      questionStep: -1,
-      mistakes: 0,
-      time: 300000,
-      gameTimer: null,
-      gameResult: ``
-    });
+    )).toEqual(initialState);
   });
 
   it(`Reducer correctly works with incorrect data`, () => {
@@ -79,7 +87,9 @@ describe(`Reducer test group`, () => {
       mistakes: 0,
       time: 300000,
       gameTimer: null,
-      gameResult: ``
+      gameResult: ``,
+      points: 0,
+      quickAnswerCount: 0,
     });
   });
 
@@ -95,7 +105,9 @@ describe(`Reducer test group`, () => {
       mistakes: 0,
       time: 299000,
       gameTimer: null,
-      gameResult: ``
+      gameResult: ``,
+      points: 0,
+      quickAnswerCount: 0,
     });
   });
 
@@ -104,9 +116,11 @@ describe(`Reducer test group`, () => {
         {
           questionStep: 5,
           mistakes: 2,
-          time: 125000,
+          time: 0,
           gameTimer: 3,
-          gameResult: ``
+          gameResult: ``,
+          points: 12,
+          quickAnswerCount: 4,
         },
         {
           type: `RESULT_LOSE_TIME`,
@@ -115,9 +129,11 @@ describe(`Reducer test group`, () => {
     )).toEqual({
       questionStep: -1,
       mistakes: 2,
-      time: 125000,
+      time: 0,
       gameTimer: 3,
-      gameResult: `lose-time`
+      gameResult: `lose-time`,
+      points: 12,
+      quickAnswerCount: 4,
     });
   });
 });

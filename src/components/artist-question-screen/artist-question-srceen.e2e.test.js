@@ -26,6 +26,6 @@ describe(`end to end test`, () => {
     const form = app.find(`.game__artist`);
 
     form.simulate(`change`, evt);
-    expect(userAnswerHandler).toHaveBeenCalledWith(`John Snow`);
+    expect(userAnswerHandler).toHaveBeenCalledWith(`John Snow`, expect.any(Number));
   });
 });

@@ -31,7 +31,7 @@ describe(`end to end test`, () => {
     const form = app.find(`.game__tracks`);
 
     form.simulate(`submit`, evt);
-    expect(asnwerHandler).toHaveBeenCalledWith(userAnswerValue);
+    expect(asnwerHandler).toHaveBeenCalledWith(userAnswerValue, expect.any(Number));
     expect(resetAnswerHandler).toHaveBeenCalled();
   });
 });

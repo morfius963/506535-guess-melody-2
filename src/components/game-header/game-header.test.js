@@ -10,7 +10,7 @@ jest.mock(`../game-mistakes/game-mistakes.jsx`, () => jest.fn().mockReturnValue(
 describe(`snapshot test`, () => {
   it(`Component correctly renders`, () => {
     const props = {
-      gameTime: 5000,
+      time: 5000,
       onTimeEnd: jest.fn(),
       onTimeUpdate: jest.fn(),
       mistakes: 0,

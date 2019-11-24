@@ -3,9 +3,7 @@ import renderer from "react-test-renderer";
 import GameResultLose from "./game-result-lose.jsx";
 
 jest.mock(`react-router-dom`, () => ({
-  useHistory: () => ({
-    push: jest.fn(),
-  }),
+  Link: () => null
 }));
 
 describe(`snapshot test`, () => {
