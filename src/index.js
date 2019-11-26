@@ -5,20 +5,18 @@ import {createStore, applyMiddleware, combineReducers} from "redux";
 import {Provider} from "react-redux";
 import {compose} from "recompose";
 import {Router} from "react-router-dom";
-import {createBrowserHistory} from "history";
 
 import App from "./components/app/app.jsx";
 import game from "./store/reducers/game/game.js";
 import appData from "./store/reducers/app-data/app-data.js";
 import user from "./store/reducers/user/user.js";
 import createAPI from "./api.js";
+import history from "./history.js";
 
 const settings = {
   gameTime: 5,
   errorCount: 3
 };
-
-const history = createBrowserHistory();
 
 const init = () => {
   const {errorCount, gameTime} = settings;
