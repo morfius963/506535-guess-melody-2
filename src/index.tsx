@@ -1,17 +1,19 @@
-import React from "react";
-import ReactDOM from "react-dom";
+import * as React from "react";
+import * as ReactDOM from "react-dom";
 import thunk from 'redux-thunk';
 import {createStore, applyMiddleware, combineReducers} from "redux";
 import {Provider} from "react-redux";
 import {compose} from "recompose";
 import {Router} from "react-router-dom";
 
-import App from "./components/app/app.jsx";
-import game from "./store/reducers/game/game.js";
-import appData from "./store/reducers/app-data/app-data.js";
-import user from "./store/reducers/user/user.js";
-import createAPI from "./api.js";
-import history from "./history.js";
+import App from "./components/app/app";
+import game from "./store/reducers/game/game";
+import appData from "./store/reducers/app-data/app-data";
+import user from "./store/reducers/user/user";
+import createAPI from "./api";
+import history from "./history";
+
+declare const __REDUX_DEVTOOLS_EXTENSION__: () => any;
 
 const settings = {
   gameTime: 5,
@@ -31,7 +33,7 @@ const init = () => {
       reducer,
       compose(
           applyMiddleware(thunk.withExtraArgument(api)),
-          window.__REDUX_DEVTOOLS_EXTENSION__ ? window.__REDUX_DEVTOOLS_EXTENSION__() : (f) => f
+          __REDUX_DEVTOOLS_EXTENSION__ && __REDUX_DEVTOOLS_EXTENSION__()
       )
   );
 
