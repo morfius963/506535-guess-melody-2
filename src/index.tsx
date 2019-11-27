@@ -1,9 +1,8 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 import thunk from 'redux-thunk';
-import {createStore, applyMiddleware, combineReducers} from "redux";
+import {createStore, applyMiddleware, combineReducers, compose} from "redux";
 import {Provider} from "react-redux";
-import {compose} from "recompose";
 import {Router} from "react-router-dom";
 
 import App from "./components/app/app";
@@ -13,7 +12,13 @@ import user from "./store/reducers/user/user";
 import createAPI from "./api";
 import history from "./history";
 
-declare const __REDUX_DEVTOOLS_EXTENSION__: () => any;
+declare global {
+  interface Window { __REDUX_DEVTOOLS_EXTENSION_COMPOSE__: () => any; }
+}
+
+const composeEnhancers = typeof window === 'object' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
+  ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__()
+  : compose;
 
 const settings = {
   gameTime: 5,
@@ -31,9 +36,8 @@ const init = () => {
   });
   const store = createStore(
       reducer,
-      compose(
-          applyMiddleware(thunk.withExtraArgument(api)),
-          __REDUX_DEVTOOLS_EXTENSION__ && __REDUX_DEVTOOLS_EXTENSION__()
+      composeEnhancers(
+          applyMiddleware(thunk.withExtraArgument(api))
       )
   );
 
