@@ -1,5 +1,7 @@
 import Action from "./action-type.js";
 
+const QUICK_ANSWER_TIME = 30 * 1000;
+
 const isArtistAnswerCorrect = (userAnswer, question) => (
   userAnswer === question.song.artist
 );
@@ -11,12 +13,9 @@ const isGenreAnswerCorrect = (userAnswer, question) => (
 );
 
 const ActionCreator = {
-  incrementStep: (userAnswer, question = {}, mistakes, maxMistakes, currentQuestionIndex, maxQuestionIndex) => {
+  incrementStep: (userAnswer, question = {}, mistakes, maxMistakes, currentQuestionIndex, maxQuestionIndex, answerTime) => {
+    const answerPoints = answerTime >= QUICK_ANSWER_TIME ? 1 : 2;
     let answerIsCorrect = false;
-
-    if (currentQuestionIndex + 1 >= maxQuestionIndex) {
-      return Action.resultWin;
-    }
 
     switch (question.type) {
       case `artist`:
@@ -26,7 +25,11 @@ const ActionCreator = {
         answerIsCorrect = isGenreAnswerCorrect(userAnswer, question);
         break;
       default:
-        return Action.incrementStep;
+        return Action.incrementStep(0);
+    }
+
+    if (currentQuestionIndex + 1 >= maxQuestionIndex) {
+      return Action.resultWin(answerIsCorrect);
     }
 
     if (!answerIsCorrect && mistakes + 1 >= maxMistakes) {
@@ -37,7 +40,7 @@ const ActionCreator = {
       return Action.incrementMistake;
     }
 
-    return Action.incrementStep;
+    return Action.incrementStep(answerPoints);
   },
 
   decrementTime: () => {

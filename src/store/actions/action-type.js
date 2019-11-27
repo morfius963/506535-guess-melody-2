@@ -14,14 +14,26 @@ export const ActionType = {
 };
 
 export default {
-  incrementStep: {
-    type: ActionType.INCREMENT_STEP,
-    payload: 1
+  incrementStep: (points) => {
+    const isQuickAnswer = points === 2;
+
+    return {
+      type: ActionType.INCREMENT_STEP,
+      payload: {
+        step: 1,
+        points,
+        quickAnswerCount: isQuickAnswer ? 1 : 0
+      }
+    };
   },
 
   incrementMistake: {
     type: ActionType.INCREMENT_MISTAKES,
-    payload: 1
+    payload: {
+      step: 1,
+      mistakes: 1,
+      points: -2
+    }
   },
 
   reset: {
@@ -33,9 +45,14 @@ export default {
     payload: 1000
   },
 
-  resultWin: {
-    type: ActionType.RESULT_WIN,
-    payload: `win`
+  resultWin: (isAnswerCorrect) => {
+    return {
+      type: ActionType.RESULT_WIN,
+      payload: {
+        result: `win`,
+        mistake: isAnswerCorrect ? 0 : 1
+      }
+    };
   },
 
   resultLoseTime: {
