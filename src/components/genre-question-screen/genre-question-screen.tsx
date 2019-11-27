@@ -1,10 +1,10 @@
-import React from "react";
-import PropTypes from "prop-types";
+import * as React from "react";
+import GenreAnswer from "../genre-answer/genre-answer";
+import {Props} from "./interface";
 
-import propTypes from "./prop-types.js";
-import GenreAnswer from "../genre-answer/genre-answer.jsx";
+class GenreQuestionScreen extends React.PureComponent<Props, null> {
+  _startTime: null | number;
 
-class GenreQuestionScreen extends React.PureComponent {
   constructor(props) {
     super(props);
 
@@ -58,16 +58,5 @@ class GenreQuestionScreen extends React.PureComponent {
     this._startTime = null;
   }
 }
-
-GenreQuestionScreen.propTypes = {
-  questions: propTypes.questions,
-  onAnswer: PropTypes.func.isRequired,
-  screenIndex: PropTypes.number.isRequired,
-  renderPlayer: PropTypes.func.isRequired,
-  onChange: PropTypes.func.isRequired,
-  userAnswer: PropTypes.arrayOf(PropTypes.bool).isRequired,
-  resetUserAnswer: PropTypes.func.isRequired,
-  resetActivePlayerValue: PropTypes.func.isRequired
-};
 
 export default GenreQuestionScreen;

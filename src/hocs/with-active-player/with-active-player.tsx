@@ -1,11 +1,22 @@
-import React from 'react';
-import AudioPlayer from "../../components/audio-player/audio-player.jsx";
-import withAudioPlayer from "../with-audio-player/with-audio-player.jsx";
+import * as React from 'react';
+import AudioPlayer from "../../components/audio-player/audio-player";
+import withAudioPlayer from "../with-audio-player/with-audio-player";
+import {QuestionGenre, QuestionArtist} from "../../types";
+
+interface Props {
+  questions: QuestionGenre | QuestionArtist,
+  screenIndex: number,
+  onAnswer: (userAnswer: boolean[], answerTime: number) => void,
+}
+
+interface State {
+  activePlayer: number
+}
 
 const AudioPlayerWrapped = withAudioPlayer(AudioPlayer);
 
 const withActivePlayer = (Component) => {
-  class WithActivePlayer extends React.PureComponent {
+  class WithActivePlayer extends React.PureComponent<Props, State> {
     constructor(props) {
       super(props);
 

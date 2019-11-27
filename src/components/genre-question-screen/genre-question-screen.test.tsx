@@ -1,10 +1,10 @@
-import React from "react";
-import renderer from "react-test-renderer";
-import GenreQuestionScreen from "./genre-question-screen.jsx";
-import GenreAnswer from "../genre-answer/genre-answer.jsx";
-import {questions} from "../../__fixtures__/questions.js";
+import * as React from "react";
+import * as renderer from "react-test-renderer";
+import GenreQuestionScreen from "./genre-question-screen";
+import GenreAnswer from "../genre-answer/genre-answer";
+import {questions} from "../../__fixtures__/questions";
 
-jest.mock(`../genre-answer/genre-answer.jsx`, () => jest.fn().mockReturnValue(null));
+jest.mock(`../genre-answer/genre-answer`, () => jest.fn().mockReturnValue(null));
 
 describe(`snapshot test`, () => {
   it(`Component correctly renders`, () => {

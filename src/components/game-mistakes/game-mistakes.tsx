@@ -1,7 +1,7 @@
-import React from "react";
-import propTypes from "./prop-types.js";
+import * as React from "react";
+import {Props} from "./interface";
 
-const GameMistakes = ({mistakes}) => {
+const GameMistakes = ({mistakes}: Props) => {
   return (
     <div className="game__mistakes">
       {new Array(mistakes).fill(``).map((elem, i) =>
@@ -10,7 +10,5 @@ const GameMistakes = ({mistakes}) => {
     </div>
   );
 };
-
-GameMistakes.propTypes = propTypes;
 
 export default GameMistakes;

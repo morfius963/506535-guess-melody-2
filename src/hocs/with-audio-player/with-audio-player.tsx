@@ -1,8 +1,21 @@
-import React from 'react';
-import PropTypes from "prop-types";
+import * as React from 'react';
+
+interface Props {
+  src: string,
+  id: number,
+  isPlaying: boolean,
+  onPlayButtonClick: (id: number) => void,
+}
+
+interface State {
+  isLoading: boolean,
+  isPlaying: boolean,
+}
 
 const withAudioPlayer = (Component) => {
-  class WithAudioPlayer extends React.PureComponent {
+  class WithAudioPlayer extends React.PureComponent<Props, State> {
+    _audioRef: React.RefObject<HTMLAudioElement>;
+
     constructor(props) {
       super(props);
 
@@ -66,12 +79,6 @@ const withAudioPlayer = (Component) => {
       });
     }
   }
-
-  WithAudioPlayer.propTypes = {
-    isPlaying: PropTypes.bool.isRequired,
-    onPlayButtonClick: PropTypes.func.isRequired,
-    src: PropTypes.string.isRequired,
-  };
 
   return WithAudioPlayer;
 };

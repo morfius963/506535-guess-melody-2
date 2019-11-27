@@ -1,28 +1,27 @@
-import React from "react";
-import PropTypes from "prop-types";
+import * as React from "react";
 import {connect} from "react-redux";
 import {Switch, Route, Redirect} from "react-router-dom";
 
-import ActionCreator from "../../store/actions/action-creator.js";
+import ActionCreator from "../../store/actions/action-creator";
 import Operation from "../../store/actions/async-actions";
-import WelcomeScreen from "../welcome-screen/welcome-scren.jsx";
-import ArtistQuestionScreen from "../artist-question-screen/artist-question-screen.jsx";
-import GenreQuestionScreen from "../genre-question-screen/genre-question-screen.jsx";
-import GameHeader from "../game-header/game-header.jsx";
-import AuthorizationScreen from "../authorization-screen/authorization-screen.jsx";
-import GameResultLose from "../game-result-lose/game-result-lose.jsx";
-import GameResultSuccess from "../game-result-success/game-result-success.jsx";
-import propTypes from "./prop-types.js";
-import withActivePlayer from "../../hocs/with-active-player/with-active-player.jsx";
-import withUserAnswer from "../../hocs/with-user-answer/with-user-answer.jsx";
-import withAuthorizationScreen from "../../hocs/with-authorization-screen/with-authorization-screen.jsx";
-import PrivateRoute from "../../hocs/with-private-route/with-private-route.jsx";
+import WelcomeScreen from "../welcome-screen/welcome-scren";
+import ArtistQuestionScreen from "../artist-question-screen/artist-question-screen";
+import GenreQuestionScreen from "../genre-question-screen/genre-question-screen";
+import GameHeader from "../game-header/game-header";
+import AuthorizationScreen from "../authorization-screen/authorization-screen";
+import GameResultLose from "../game-result-lose/game-result-lose";
+import GameResultSuccess from "../game-result-success/game-result-success";
+import withActivePlayer from "../../hocs/with-active-player/with-active-player";
+import withUserAnswer from "../../hocs/with-user-answer/with-user-answer";
+import withAuthorizationScreen from "../../hocs/with-authorization-screen/with-authorization-screen";
+import PrivateRoute from "../../hocs/with-private-route/with-private-route";
+import {Props} from "./interface";
 
 const GenreQuestionScreenWrapped = withUserAnswer(withActivePlayer(GenreQuestionScreen));
 const ArtistQuestionScreenWrapped = withActivePlayer(ArtistQuestionScreen);
 const AuthorizationScreenWrapped = withAuthorizationScreen(AuthorizationScreen);
 
-class App extends React.PureComponent {
+class App extends React.PureComponent<Props, null> {
   constructor(props) {
     super(props);
 
@@ -51,7 +50,6 @@ class App extends React.PureComponent {
         />
         <PrivateRoute
           path="/win"
-          exact
           renderCmp={() => <GameResultSuccess time={time} mistakes={mistakes} restartGame={restartGame} points={points} quickAnswerCount={quickAnswerCount} />}
           isAuthorizationRequired={isAuthorizationRequired}
         />
@@ -128,17 +126,17 @@ class App extends React.PureComponent {
       case `genre`:
         return (
           <GenreQuestionScreenWrapped
-            questions = {question}
+            questions={question}
             screenIndex={questionStep}
-            onAnswer = {userAnswerHandler}
+            onAnswer={userAnswerHandler}
           />
         );
       case `artist`:
         return (
           <ArtistQuestionScreenWrapped
-            questions = {question}
+            questions={question}
             screenIndex={questionStep}
-            onAnswer = {userAnswerHandler}
+            onAnswer={userAnswerHandler}
           />
         );
     }
@@ -146,30 +144,6 @@ class App extends React.PureComponent {
     return null;
   }
 }
-
-App.propTypes = {
-  time: PropTypes.number.isRequired,
-  timeForGame: PropTypes.number.isRequired,
-  questions: PropTypes.arrayOf(propTypes.question).isRequired,
-  questionStep: PropTypes.number.isRequired,
-  mistakes: PropTypes.number.isRequired,
-  maxMistakes: PropTypes.number.isRequired,
-  points: PropTypes.number.isRequired,
-  quickAnswerCount: PropTypes.number.isRequired,
-  isLoading: PropTypes.bool.isRequired,
-  isAuthorizationRequired: PropTypes.bool.isRequired,
-  gameResult: PropTypes.oneOf([``, `win`, `lose-time`, `lose-mistakes`]),
-
-  onWelcomeScreenClick: PropTypes.func.isRequired,
-  onUserAnswer: PropTypes.func.isRequired,
-  onTimeUpdate: PropTypes.func.isRequired,
-  onTimeEnd: PropTypes.func.isRequired,
-  registrateTimer: PropTypes.func.isRequired,
-  loadQuestions: PropTypes.func.isRequired,
-  postUserLogin: PropTypes.func.isRequired,
-  resetGame: PropTypes.func.isRequired,
-  restartGame: PropTypes.func.isRequired
-};
 
 const mapStateToProps = (state) => ({
   questionStep: state.game.questionStep,

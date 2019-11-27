@@ -1,13 +1,13 @@
-import React from "react";
+import * as React from "react";
 import {Link} from "react-router-dom";
-import propTypes from "./prop-types.js";
+import {Props} from "./interface";
 
 const GAME_TIME = 300000;
 
-const GameResultSuccess = ({time, mistakes, points, quickAnswerCount, restartGame}) => {
+const GameResultSuccess = ({time, mistakes, points, quickAnswerCount, restartGame}: Props) => {
   const timeUsage = GAME_TIME - time;
-  const minutes = parseInt(timeUsage / 1000 / 60, 10);
-  const seconds = parseInt(timeUsage / 1000 % 60, 10);
+  const minutes = parseInt(`${timeUsage / 1000 / 60}`, 10);
+  const seconds = parseInt(`${timeUsage / 1000 % 60}`, 10);
   const formattedMinutes = `${minutes}`.padStart(2, `0`);
   const formattedSeconds = `${seconds}`.padStart(2, `0`);
   const formattedTime = `${formattedMinutes}:${formattedSeconds}`;
@@ -21,7 +21,5 @@ const GameResultSuccess = ({time, mistakes, points, quickAnswerCount, restartGam
     </section>
   );
 };
-
-GameResultSuccess.propTypes = propTypes;
 
 export default GameResultSuccess;

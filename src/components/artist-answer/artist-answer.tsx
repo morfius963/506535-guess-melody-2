@@ -1,8 +1,7 @@
-import React from "react";
-import PropTypes from "prop-types";
-import propTypes from "./prop-types.js";
+import * as React from "react";
+import {Props} from "./interface";
 
-const ArtistAnswer = ({answer, id}) => {
+const ArtistAnswer = ({answer, id}: Props) => {
   return (
     <div className="artist">
       <input className="artist__input visually-hidden" type="radio" name="answer" value={answer.artist} id={`answer-${id}`} />
@@ -12,11 +11,6 @@ const ArtistAnswer = ({answer, id}) => {
       </label>
     </div>
   );
-};
-
-ArtistAnswer.propTypes = {
-  answer: propTypes.answer,
-  id: PropTypes.number.isRequired
 };
 
 export default ArtistAnswer;

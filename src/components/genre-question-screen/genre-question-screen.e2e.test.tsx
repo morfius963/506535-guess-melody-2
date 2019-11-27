@@ -1,7 +1,7 @@
-import React from 'react';
+import * as React from 'react';
 import {mount} from 'enzyme';
-import GenreQuestionScreen from "./genre-question-screen.jsx";
-import {questions} from "../../__fixtures__/questions.js";
+import GenreQuestionScreen from "./genre-question-screen";
+import {questions} from "../../__fixtures__/questions";
 
 const currentQuestion = questions.find((question) => question.type === `genre`);
 

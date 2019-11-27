@@ -1,10 +1,10 @@
-import React from "react";
-import PropTypes from "prop-types";
+import * as React from "react";
+import ArtistAnswer from "../artist-answer/artist-answer";
+import {Props} from "./interface";
 
-import propTypes from "./prop-types.js";
-import ArtistAnswer from "../artist-answer/artist-answer.jsx";
+class ArtistQuestionScreen extends React.PureComponent<Props, null> {
+  _startTime: null | number;
 
-class ArtistQuestionScreen extends React.PureComponent {
   constructor(props) {
     super(props);
 
@@ -55,13 +55,5 @@ class ArtistQuestionScreen extends React.PureComponent {
     this._startTime = null;
   }
 }
-
-ArtistQuestionScreen.propTypes = {
-  questions: propTypes.questions,
-  onAnswer: PropTypes.func.isRequired,
-  screenIndex: PropTypes.number.isRequired,
-  renderPlayer: PropTypes.func.isRequired,
-  resetActivePlayerValue: PropTypes.func.isRequired
-};
 
 export default ArtistQuestionScreen;

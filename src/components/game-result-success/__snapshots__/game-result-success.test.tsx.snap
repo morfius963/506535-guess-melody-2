@@ -25,7 +25,9 @@ exports[`snapshot test Component correctly renders 1`] = `
     Вы играли 
     04:10
      и набрали 
+    10
      баллов (
+    4
      быстрых ответов), совершив 
     1
      ошибки

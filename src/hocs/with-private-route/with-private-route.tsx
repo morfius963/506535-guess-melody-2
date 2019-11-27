@@ -1,22 +1,22 @@
-import React from "react";
-import PropTypes from "prop-types";
+import * as React from "react";
 import {Route, Redirect} from "react-router-dom";
 
-const PrivateRoute = ({renderCmp, isAuthorizationRequired, rest}) => (
+interface Props {
+  path: string,
+  isAuthorizationRequired: boolean,
+  renderCmp: () => React.ReactElement
+}
+
+const PrivateRoute = ({path, renderCmp, isAuthorizationRequired}: Props) => (
   <Route
-    {...rest}
-    render={(props) => (
+    path={path}
+    exact
+    render={() => (
       isAuthorizationRequired
         ? <Redirect to="/auth" />
-        : renderCmp(props)
+        : renderCmp()
     )}
   />
 );
-
-PrivateRoute.propTypes = {
-  renderCmp: PropTypes.func.isRequired,
-  isAuthorizationRequired: PropTypes.bool.isRequired,
-  rest: PropTypes.object
-};
 
 export default PrivateRoute;

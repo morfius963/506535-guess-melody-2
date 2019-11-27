@@ -1,6 +1,6 @@
-import React from "react";
-import renderer from "react-test-renderer";
-import WelcomeScreen from "./welcome-scren.jsx";
+import * as React from "react";
+import * as renderer from "react-test-renderer";
+import WelcomeScreen from "./welcome-scren";
 
 describe(`snapshot test`, () => {
   it(`App correctly renders`, () => {

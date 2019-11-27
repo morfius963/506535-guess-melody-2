@@ -1,7 +1,9 @@
-import React from "react";
-import propTypes from "./prop-types.js";
+import * as React from "react";
+import {Props} from "./interface";
 
-class GameTime extends React.PureComponent {
+class GameTime extends React.PureComponent<Props, null> {
+  _TIMER_BLINK_VALUE: number;
+
   constructor(props) {
     super(props);
 
@@ -12,11 +14,11 @@ class GameTime extends React.PureComponent {
 
   render() {
     const {time} = this.props;
-    const minutes = parseInt(time / 1000 / 60, 10);
-    const seconds = parseInt(time / 1000 % 60, 10);
+    const minutes = parseInt(`${time / 1000 / 60}`, 10);
+    const seconds = parseInt(`${time / 1000 % 60}`, 10);
 
     return (
-      <div className={`timer__value ${time < this._TIMER_BLINK_VALUE ? `timer__value--finished` : ``}`} xmlns="http://www.w3.org/1999/xhtml">
+      <div className={`timer__value ${time < this._TIMER_BLINK_VALUE ? `timer__value--finished` : ``}`}>
         <span className="timer__mins">{`${minutes}`.padStart(2, `0`)}</span>
         <span className="timer__dots">:</span>
         <span className="timer__secs">{`${seconds}`.padStart(2, `0`)}</span>
@@ -40,7 +42,5 @@ class GameTime extends React.PureComponent {
     return onTimeUpdate();
   }
 }
-
-GameTime.propTypes = propTypes;
 
 export default GameTime;

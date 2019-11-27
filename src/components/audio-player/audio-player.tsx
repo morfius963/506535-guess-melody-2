@@ -1,9 +1,9 @@
-import React, {useCallback} from "react";
+import * as React from "react";
+import {useCallback} from "react";
 import clsx from 'clsx';
-import propTypes from "./prop-types.js";
+import {Props} from "./interface";
 
-const AudioPlayer = (props) => {
-  const {audioRef, isLoading, isPlaying, onPlayButtonClick, id} = props;
+const AudioPlayer = ({audioRef, isLoading, isPlaying, onPlayButtonClick, id}: Props) => {
   const buttonClassName = clsx(
       {
         'track__button': true,
@@ -32,7 +32,5 @@ const AudioPlayer = (props) => {
     </React.Fragment>
   );
 };
-
-AudioPlayer.propTypes = propTypes;
 
 export default AudioPlayer;

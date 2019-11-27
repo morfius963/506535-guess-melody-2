@@ -1,6 +1,6 @@
-import React from 'react';
+import * as React from 'react';
 import {shallow} from 'enzyme';
-import WelcomeScreen from "./welcome-scren.jsx";
+import WelcomeScreen from "./welcome-scren";
 
 describe(`end to end test`, () => {
   it(`Click event correctly works on start button`, () => {

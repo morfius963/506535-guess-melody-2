@@ -1,6 +1,6 @@
-import React from "react";
-import renderer from "react-test-renderer";
-import GameResultLose from "./game-result-lose.jsx";
+import * as React from "react";
+import * as renderer from "react-test-renderer";
+import GameResultLose from "./game-result-lose";
 
 jest.mock(`react-router-dom`, () => ({
   Link: () => null

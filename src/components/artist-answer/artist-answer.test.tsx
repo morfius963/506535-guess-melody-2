@@ -1,7 +1,7 @@
-import React from "react";
-import renderer from "react-test-renderer";
-import ArtistAnswer from "./artist-answer.jsx";
-import {questions} from "../../__fixtures__/questions.js";
+import * as React from "react";
+import * as renderer from "react-test-renderer";
+import ArtistAnswer from "./artist-answer";
+import {questions} from "../../__fixtures__/questions";
 
 describe(`snapshot test`, () => {
   it(`Component correctly renders`, () => {

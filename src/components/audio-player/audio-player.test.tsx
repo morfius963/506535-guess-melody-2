@@ -1,7 +1,7 @@
-import React from "react";
-import renderer from "react-test-renderer";
-import {questions} from "../../__fixtures__/questions.js";
-import AudioPlayer from "../audio-player/audio-player.jsx";
+import * as React from "react";
+import * as renderer from "react-test-renderer";
+import {questions} from "../../__fixtures__/questions";
+import AudioPlayer from "../audio-player/audio-player";
 
 describe(`snapshot test`, () => {
   it(`Component correctly renders`, () => {

@@ -1,7 +1,7 @@
-import React from "react";
-import renderer from "react-test-renderer";
-import GenreAnswer from "./genre-answer.jsx";
-import {questions} from "../../__fixtures__/questions.js";
+import * as React from "react";
+import * as renderer from "react-test-renderer";
+import GenreAnswer from "./genre-answer";
+import {questions} from "../../__fixtures__/questions";
 
 describe(`snapshot test`, () => {
   it(`Component correctly renders`, () => {
@@ -9,7 +9,8 @@ describe(`snapshot test`, () => {
     const props = {
       answer: currentQuestion.answers[0],
       id: 0,
-      checkboxChangeHandler: jest.fn()
+      checkboxChangeHandler: jest.fn(),
+      children: <div></div>
     };
 
     const tree = renderer

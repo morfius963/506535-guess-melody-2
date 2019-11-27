@@ -1,8 +1,7 @@
-import React from "react";
-import PropTypes from "prop-types";
-import propTypes from "./prop-types.js";
+import * as React from "react";
+import {Props} from "./interface";
 
-const GenreAnswer = ({answer, id, checkboxChangeHandler, children}) => {
+const GenreAnswer = ({answer, id, checkboxChangeHandler, children}: Props) => {
   return (
     <div className="track">
 
@@ -20,13 +19,6 @@ const GenreAnswer = ({answer, id, checkboxChangeHandler, children}) => {
       </div>
     </div>
   );
-};
-
-GenreAnswer.propTypes = {
-  answer: propTypes.answer,
-  id: PropTypes.number.isRequired,
-  checkboxChangeHandler: PropTypes.func.isRequired,
-  children: PropTypes.element
 };
 
 export default GenreAnswer;

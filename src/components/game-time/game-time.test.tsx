@@ -1,6 +1,6 @@
-import React from "react";
-import renderer from "react-test-renderer";
-import GameTime from "../game-time/game-time.jsx";
+import * as React from "react";
+import * as renderer from "react-test-renderer";
+import GameTime from "../game-time/game-time";
 
 describe(`snapshot test`, () => {
   it(`Component correctly renders`, () => {

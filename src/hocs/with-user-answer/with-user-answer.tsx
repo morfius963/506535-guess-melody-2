@@ -1,8 +1,21 @@
-import React from 'react';
+import * as React from 'react';
 import {makeAnswers} from "../../utils.js";
+import {QuestionGenre} from "../../types";
+
+interface Props {
+  questions: QuestionGenre,
+  screenIndex: number,
+  onAnswer: (userAnswer: boolean[], answerTime: number) => void,
+}
+
+interface State {
+  userAnswer: boolean[]
+}
 
 const withUserAnswer = (Component) => {
-  class WithUserAnswer extends React.PureComponent {
+  class WithUserAnswer extends React.PureComponent<Props, State> {
+    _ANSWERS_COUNT: number;
+
     constructor(props) {
       super(props);
 

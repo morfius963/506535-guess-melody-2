@@ -1,8 +1,8 @@
-import React from "react";
+import * as React from "react";
 import {Link} from "react-router-dom";
-import propTypes from "./prop-types.js";
+import {Props} from "./interface";
 
-const GameResultLose = ({result, restartGame}) => {
+const GameResultLose = ({result, restartGame}: Props) => {
   const loseReason = result.split(`-`)[1];
   const loseMessage = loseReason === `mistakes`
     ? `У вас закончились все попытки. Ничего, повезёт в следующий раз!`
@@ -17,7 +17,5 @@ const GameResultLose = ({result, restartGame}) => {
     </section>
   );
 };
-
-GameResultLose.propTypes = propTypes;
 
 export default GameResultLose;

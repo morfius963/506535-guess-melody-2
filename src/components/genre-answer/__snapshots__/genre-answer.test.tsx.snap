@@ -4,6 +4,7 @@ exports[`snapshot test Component correctly renders 1`] = `
 <div
   className="track"
 >
+  <div />
   <div
     className="game__answer"
   >

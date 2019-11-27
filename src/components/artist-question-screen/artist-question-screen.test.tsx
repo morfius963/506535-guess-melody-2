@@ -1,8 +1,8 @@
-import React from "react";
-import renderer from "react-test-renderer";
-import ArtistQuestionScreen from "./artist-question-screen.jsx";
+import * as React from "react";
+import * as renderer from "react-test-renderer";
+import ArtistQuestionScreen from "./artist-question-screen";
 import ArtistAnswer from "../artist-answer/artist-answer";
-import {questions} from "../../__fixtures__/questions.js";
+import {questions} from "../../__fixtures__/questions";
 
 jest.mock(`../artist-answer/artist-answer`, () => jest.fn().mockReturnValue(null));
 

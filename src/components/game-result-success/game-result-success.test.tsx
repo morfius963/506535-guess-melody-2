@@ -1,6 +1,6 @@
-import React from "react";
-import renderer from "react-test-renderer";
-import GameResultSuccess from "./game-result-success.jsx";
+import * as React from "react";
+import * as renderer from "react-test-renderer";
+import GameResultSuccess from "./game-result-success";
 
 jest.mock(`react-router-dom`, () => ({
   Link: () => null
@@ -12,6 +12,8 @@ describe(`snapshot test`, () => {
     const props = {
       time: 50000,
       mistakes: 1,
+      points: 10,
+      quickAnswerCount: 4,
       restartGame: jest.fn()
     };
 

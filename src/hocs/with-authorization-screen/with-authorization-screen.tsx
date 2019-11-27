@@ -1,8 +1,25 @@
-import React from 'react';
-import PropTypes from "prop-types";
+import * as React from 'react';
+
+interface Props {
+  onSubmit: (
+      userData: {
+        email: string,
+        password: string
+      },
+      pushPath: () => void
+  ) => void,
+  history: {
+    push: (path: string) => void
+  }
+}
+
+interface State {
+  email?: string,
+  password?: string
+}
 
 const withAuthorizationScreen = (Component) => {
-  class WithAuthorizationScreen extends React.PureComponent {
+  class WithAuthorizationScreen extends React.PureComponent<Props, State> {
     constructor(props) {
       super(props);
 
@@ -48,11 +65,6 @@ const withAuthorizationScreen = (Component) => {
       );
     }
   }
-
-  WithAuthorizationScreen.propTypes = {
-    onSubmit: PropTypes.func.isRequired,
-    history: PropTypes.object
-  };
 
   return WithAuthorizationScreen;
 };

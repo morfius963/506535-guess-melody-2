@@ -1,9 +1,15 @@
-import React from 'react';
+import * as React from 'react';
 import {shallow} from 'enzyme';
-import withUserAnswer from "./with-user-answer.jsx";
+import withUserAnswer from "./with-user-answer";
+import {fixtureData} from "../../__fixtures__/questions";
 
 describe(`end to end test`, () => {
   it(`Rendered checkboxes are synchronized with state`, () => {
+    const props = {
+      questions: fixtureData,
+      screenIndex: 1,
+      onAnswer: jest.fn()
+    }
     const evt1 = {
       target: {
         value: `test-1`,
@@ -19,7 +25,7 @@ describe(`end to end test`, () => {
     const mockComponent = () => <div></div>;
     const MockComponentWrapped = withUserAnswer(mockComponent);
 
-    const app = shallow(<MockComponentWrapped />);
+    const app = shallow(<MockComponentWrapped {...props} />);
 
     app.instance()._checkboxChangeHandler(evt1);
     expect(app.state().userAnswer).toEqual([false, true, false, false]);

@@ -1,7 +1,7 @@
-import React from "react";
-import propTypes from "./prop-types.js";
+import * as React from "react";
+import {Props} from "./interface";
 
-const AuthorizationScreen = ({formSubmitHandler, userInputHandler}) => {
+const AuthorizationScreen = ({formSubmitHandler, userInputHandler}: Props) => {
   return (
     <section className="login">
       <div className="login__logo"><img src="img/melody-logo.png" alt="Угадай мелодию" width="186" height="83" /></div>
@@ -17,12 +17,10 @@ const AuthorizationScreen = ({formSubmitHandler, userInputHandler}) => {
           <input className="login__input" type="password" name="password" id="password" onChange={userInputHandler} required />
           <span className="login__error">Неверный пароль</span>
         </p>
-        <button className="login__button button" type="submit" style={{zIndex: `1`}}>Войти</button>
+        <button className="login__button button" type="submit" style={{zIndex: 1}}>Войти</button>
       </form>
     </section>
   );
 };
-
-AuthorizationScreen.propTypes = propTypes;
 
 export default AuthorizationScreen;

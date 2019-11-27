@@ -1,7 +1,7 @@
-import React from 'react';
+import * as React from 'react';
 import {mount} from 'enzyme';
-import withAuthorizationScreen from "./with-authorization-screen.jsx";
-import AuthorizationScreen from "../../components/authorization-screen/authorization-screen.jsx";
+import withAuthorizationScreen from "./with-authorization-screen";
+import AuthorizationScreen from "../../components/authorization-screen/authorization-screen";
 
 describe(`end to end test`, () => {
   it(`Component should correctly change state after input`, () => {

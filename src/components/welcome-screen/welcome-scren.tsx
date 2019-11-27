@@ -1,7 +1,7 @@
-import React from "react";
-import propTypes from "./prop-types.js";
+import * as React from "react";
+import {Props} from "./interface";
 
-const WelcomeScreen = ({gameTime, errorCount, onButtonClick}) => {
+const WelcomeScreen = ({gameTime, errorCount, onButtonClick}: Props) => {
   return (
     <section className="welcome">
       <div className="welcome__logo"><img src="img/melody-logo.png" alt="Угадай мелодию" width="186" height="83" /></div>
@@ -16,7 +16,5 @@ const WelcomeScreen = ({gameTime, errorCount, onButtonClick}) => {
     </section>
   );
 };
-
-WelcomeScreen.propTypes = propTypes;
 
 export default WelcomeScreen;
