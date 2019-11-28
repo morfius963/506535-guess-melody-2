@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {shallow} from 'enzyme';
-import GameTime from "../game-time/game-time";
+import {GameTime} from "../game-time/game-time";
 
 describe(`end to end test`, () => {
   it(`Tick method correctly decrements time`, () => {
