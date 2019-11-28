@@ -67,7 +67,7 @@ class App extends React.PureComponent<Props, null> {
   }
 
   _renderMainPage() {
-    const {questions, questionStep, mistakes, time, onTimeUpdate, onTimeEnd, registrateTimer, isLoading, resetGame} = this.props;
+    const {questions, questionStep, mistakes, isLoading, resetGame} = this.props;
     const currentQuestion = questions[questionStep];
 
     return (
@@ -75,14 +75,7 @@ class App extends React.PureComponent<Props, null> {
         ? null
         : <section className="game">
 
-          {currentQuestion && <GameHeader
-            mistakes={mistakes}
-            time={time}
-            registrateTimer={registrateTimer}
-            onTimeUpdate={onTimeUpdate}
-            onTimeEnd={onTimeEnd}
-            resetGame={resetGame}
-          />}
+          {currentQuestion && <GameHeader mistakes={mistakes} resetGame={resetGame} />}
 
           {this._getScreen(currentQuestion)}
 
@@ -164,10 +157,6 @@ const mapDispatchToProps = {
 
   onWelcomeScreenClick: ActionCreator.incrementStep,
 
-  onTimeUpdate: ActionCreator.decrementTime,
-
-  onTimeEnd: ActionCreator.resultLoseTime,
-
   resetGame: ActionCreator.resetGame,
 
   restartGame: ActionCreator.restartGame,
@@ -175,8 +164,6 @@ const mapDispatchToProps = {
   onUserAnswer: (userAnswer, question, mistakes, maxMistakes, currentQuestionIndex, maxQuestionIndex, answerTime) => (
     ActionCreator.incrementStep(userAnswer, question, mistakes, maxMistakes, currentQuestionIndex, maxQuestionIndex, answerTime)
   ),
-
-  registrateTimer: (id) => ActionCreator.registrateTimer(id),
 
   postUserLogin: (userData, pushPath) => Operation.postUserLogin(userData, pushPath)
 };

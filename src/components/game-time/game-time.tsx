@@ -1,4 +1,7 @@
 import * as React from "react";
+import {connect} from "react-redux";
+
+import ActionCreator from "../../store/actions/action-creator";
 import {Props} from "./interface";
 
 class GameTime extends React.PureComponent<Props, null> {
@@ -43,4 +46,16 @@ class GameTime extends React.PureComponent<Props, null> {
   }
 }
 
-export default GameTime;
+const mapStateToProps = (state) => ({
+  time: state.game.time,
+});
+
+const mapDispatchToProps = {
+  onTimeUpdate: ActionCreator.decrementTime,
+  onTimeEnd: ActionCreator.resultLoseTime,
+  registrateTimer: (id) => ActionCreator.registrateTimer(id),
+};
+
+export {GameTime};
+
+export default connect(mapStateToProps, mapDispatchToProps)(GameTime);

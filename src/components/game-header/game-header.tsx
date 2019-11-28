@@ -3,7 +3,7 @@ import GameTime from "../game-time/game-time";
 import GameMistakes from "../game-mistakes/game-mistakes";
 import {Props} from "./interface";
 
-const GameHeader = ({mistakes, time, onTimeUpdate, onTimeEnd, registrateTimer, resetGame}: Props) => {
+const GameHeader = ({mistakes, resetGame}: Props) => {
   return (
     <header className="game__header">
       <a className="game__back" href="#" onClick={resetGame}>
@@ -15,7 +15,7 @@ const GameHeader = ({mistakes, time, onTimeUpdate, onTimeEnd, registrateTimer, r
         <circle className="timer__line" cx="390" cy="390" r="370" style={{filter: `url(#blur)`, transform: `rotate(-90deg) scaleY(-1)`, transformOrigin: `center`}} />
       </svg>
 
-      <GameTime time={time} onTimeUpdate={onTimeUpdate} onTimeEnd={onTimeEnd} registrateTimer={registrateTimer} />
+      <GameTime />
 
       <GameMistakes mistakes={mistakes} />
 
