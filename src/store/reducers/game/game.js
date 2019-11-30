@@ -43,8 +43,9 @@ const game = (state = initialAppState, action) => {
       clearInterval(state.gameTimer);
       return Object.assign({}, state, {
         questionStep: -1,
+        points: state.points + action.payload.answerPoint,
         gameResult: action.payload.result,
-        mistakes: action.payload.mistake
+        mistakes: state.mistakes + action.payload.mistake
       });
 
     case ActionType.RESULT_LOSE_TIME:
