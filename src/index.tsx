@@ -6,6 +6,7 @@ import {Provider} from "react-redux";
 import {Router} from "react-router-dom";
 
 import App from "./components/app/app";
+import withScreenSwitch from "./hocs/with-screen-switch/with-screen-switch";
 import game from "./store/reducers/game/game";
 import appData from "./store/reducers/app-data/app-data";
 import user from "./store/reducers/user/user";
@@ -16,6 +17,8 @@ const settings = {
   gameTime: 5,
   errorCount: 3
 };
+
+const AppWrapped = withScreenSwitch(App);
 
 const init = () => {
   const {errorCount, gameTime} = settings;
@@ -34,7 +37,7 @@ const init = () => {
   ReactDOM.render(
       <Provider store={store} >
         <Router history={history}>
-          <App
+          <AppWrapped
             timeForGame={gameTime}
             maxMistakes={errorCount}
           />
