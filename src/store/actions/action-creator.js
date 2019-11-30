@@ -29,7 +29,7 @@ const ActionCreator = {
     }
 
     if (currentQuestionIndex + 1 >= maxQuestionIndex) {
-      return Action.resultWin(answerIsCorrect);
+      return Action.resultWin(answerIsCorrect, answerPoints);
     }
 
     if (!answerIsCorrect && mistakes + 1 >= maxMistakes) {

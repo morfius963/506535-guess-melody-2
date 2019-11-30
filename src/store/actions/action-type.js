@@ -45,11 +45,12 @@ export default {
     payload: 1000
   },
 
-  resultWin: (isAnswerCorrect) => {
+  resultWin: (isAnswerCorrect, answerPoints) => {
     return {
       type: ActionType.RESULT_WIN,
       payload: {
         result: `win`,
+        answerPoint: isAnswerCorrect ? answerPoints : 0,
         mistake: isAnswerCorrect ? 0 : 1
       }
     };
