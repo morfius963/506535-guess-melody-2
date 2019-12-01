@@ -134,8 +134,6 @@ const withScreenSwitch = (Component) => {
   });
   
   const mapDispatchToProps = {
-    loadQuestions: Operation.loadQuestions,
-
     onWelcomeScreenClick: ActionCreator.incrementStep,
   
     restartGame: ActionCreator.restartGame,

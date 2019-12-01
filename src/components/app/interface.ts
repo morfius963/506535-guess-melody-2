@@ -9,6 +9,5 @@ export interface Props {
   mistakes: number,
   isLoading: boolean,
   renderScreen: (question : Question) => React.ReactElement,
-  resetGame: () => void,
-  loadQuestions: () => void
+  resetGame: () => void
 };

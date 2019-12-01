@@ -3,12 +3,6 @@ import GameHeader from "../game-header/game-header";
 import {Props} from "./interface";
 
 class App extends React.PureComponent<Props, null> {
-  constructor(props) {
-    super(props);
-
-    this.props.loadQuestions();
-  }
-
   render() {
     const {questions, questionStep, mistakes, isLoading, resetGame, renderScreen} = this.props;
     const currentQuestion = questions[questionStep];

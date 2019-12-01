@@ -34,7 +34,6 @@ export interface Props {
   onTimeUpdate: () => void,
   onTimeEnd: () => void,
   restartGame: () => void,
-  loadQuestions: () => void,
   registrateTimer: (id: number) => void,
   postUserLogin: (userData: UserData, pushPath: () => void) => void
 };

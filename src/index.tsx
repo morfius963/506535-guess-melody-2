@@ -5,6 +5,7 @@ import {createStore, applyMiddleware, combineReducers} from "redux";
 import {Provider} from "react-redux";
 import {Router} from "react-router-dom";
 
+import Operation from "./store/actions/async-actions.js";
 import App from "./components/app/app";
 import withScreenSwitch from "./hocs/with-screen-switch/with-screen-switch";
 import game from "./store/reducers/game/game";
@@ -33,6 +34,8 @@ const init = () => {
       reducer,
       applyMiddleware(thunk.withExtraArgument(api))
   );
+
+  store.dispatch(Operation.loadQuestions());
 
   ReactDOM.render(
       <Provider store={store} >
